@@ -44,12 +44,22 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ title, description, icon, del
         rotateY,
         transformStyle: "preserve-3d",
       }}
+      whileHover={{ scale: 1.02 }}
       className="glass-card p-10 group relative overflow-hidden transition-colors hover:border-[#CBFF00]/50 flex flex-col"
     >
-      <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-20 transition-opacity">
-         {icon}
+      <div className="absolute inset-0 pointer-events-none">
+        <motion.div 
+          className="absolute inset-0 bg-gradient-to-br from-[#CBFF00]/0 via-[#CBFF00]/4 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+          animate={{ opacity: [0.03, 0.07, 0.03] }}
+          transition={{ repeat: Infinity, duration: 6, ease: "easeInOut", delay }}
+        />
+        <motion.div 
+          className="absolute -right-10 -top-10 w-28 h-28 rounded-full bg-[#CBFF00]/10 blur-3xl"
+          animate={{ y: [-10, 10, -10], opacity: [0.2, 0.35, 0.2] }}
+          transition={{ repeat: Infinity, duration: 7, ease: "easeInOut" }}
+        />
       </div>
-      
+
       <div style={{ transform: "translateZ(50px)" }} className="relative z-10">
         <StarBorder thickness={1.5} className="w-14 h-14 rounded-lg mb-8 shadow-2xl group-hover:scale-110 transition-transform duration-500">
            <div className="w-full h-full bg-black flex items-center justify-center text-white group-hover:bg-[#CBFF00] group-hover:text-black transition-all duration-500">

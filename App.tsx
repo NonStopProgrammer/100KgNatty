@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Users, 
@@ -19,7 +19,6 @@ import StarBorder from './components/StarBorder';
 
 const App: React.FC = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
 
   const stats = [
     { label: 'Elite Clients', value: '500+', icon: Users },
@@ -52,14 +51,9 @@ const App: React.FC = () => {
     },
   ];
 
-  useEffect(() => {
-    document.body.classList.remove('theme-dark', 'theme-light');
-    document.body.classList.add(theme === 'dark' ? 'theme-dark' : 'theme-light');
-  }, [theme]);
-
   return (
-    <div className={`relative min-h-screen overflow-x-hidden selection:bg-[#CBFF00] selection:text-black ${theme === 'light' ? 'bg-white text-black' : 'bg-[#050505] text-white'}`}>
-      <Navbar theme={theme} onToggleTheme={() => setTheme(theme === 'dark' ? 'light' : 'dark')} />
+    <div className="relative min-h-screen bg-[#050505] text-white overflow-x-hidden selection:bg-[#CBFF00] selection:text-black">
+      <Navbar />
       
       <main>
         <Hero />

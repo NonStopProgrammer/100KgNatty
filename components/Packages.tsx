@@ -44,13 +44,15 @@ const Packages: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
               viewport={{ once: true }}
-              className={`relative p-10 flex flex-col ${plan.recommended ? 'bg-[#111] border-[#CBFF00]/50 border-2' : 'glass-card border-white/5 border'}`}
+              whileHover={{ y: -8, scale: 1.02 }}
+              className={`relative p-10 flex flex-col overflow-hidden ${plan.recommended ? 'bg-[#111] border-[#CBFF00]/50 border-2 shadow-[0_10px_50px_rgba(203,255,0,0.15)]' : 'glass-card border-white/5 border'}`}
             >
               {plan.recommended && (
                 <div className="absolute top-0 right-10 -translate-y-1/2 bg-[#CBFF00] text-black font-bold uppercase text-[10px] tracking-widest px-4 py-1">
                   Most Popular
                 </div>
               )}
+              <div className="absolute inset-0 pointer-events-none bg-gradient-to-br from-[#CBFF00]/0 via-[#CBFF00]/10 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500"></div>
               
               <h3 className="text-xl font-bold uppercase tracking-widest mb-2">{plan.name}</h3>
               <div className="flex items-baseline gap-1 mb-8">
