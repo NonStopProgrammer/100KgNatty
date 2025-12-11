@@ -1,8 +1,8 @@
-
 import React from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { Dumbbell, Utensils, Brain, Activity, Target, Shield, Zap, TrendingUp } from 'lucide-react';
+import { Target, Shield, Zap, Activity, TrendingUp } from 'lucide-react';
 import { ServiceCardProps } from '../types';
+import StarBorder from './StarBorder';
 
 const ServiceCard: React.FC<ServiceCardProps> = ({ title, description, icon, delay = 0 }) => {
   const x = useMotionValue(0);
@@ -51,9 +51,12 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ title, description, icon, del
       </div>
       
       <div style={{ transform: "translateZ(50px)" }} className="relative z-10">
-        <div className="w-14 h-14 bg-white/5 flex items-center justify-center rounded-lg mb-8 group-hover:bg-[#CBFF00] group-hover:text-black transition-all duration-500 shadow-2xl">
-          {icon}
-        </div>
+        <StarBorder thickness={1.5} className="w-14 h-14 rounded-lg mb-8 shadow-2xl group-hover:scale-110 transition-transform duration-500">
+           <div className="w-full h-full bg-black flex items-center justify-center text-white group-hover:bg-[#CBFF00] group-hover:text-black transition-all duration-500">
+             {icon}
+           </div>
+        </StarBorder>
+        
         <h3 className="text-2xl font-oswald font-bold mb-4 uppercase tracking-tight group-hover:text-[#CBFF00] transition-colors">{title}</h3>
         <p className="text-gray-400 leading-relaxed text-sm">
           {description}

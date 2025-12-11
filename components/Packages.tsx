@@ -1,7 +1,7 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Check } from 'lucide-react';
+import StarBorder from './StarBorder';
 
 const Packages: React.FC = () => {
   const plans = [
@@ -67,9 +67,11 @@ const Packages: React.FC = () => {
                 ))}
               </div>
 
-              <button className={`w-full py-4 uppercase font-bold tracking-widest text-sm transition-all ${plan.recommended ? 'bg-[#CBFF00] text-black hover:bg-[#b8e600]' : 'bg-white/5 text-white hover:bg-white/10 border border-white/10'}`}>
-                Select Plan
-              </button>
+              <StarBorder as="button" thickness={1.5} color={plan.recommended ? "#CBFF00" : "#ffffff"} className="w-full group">
+                <div className={`w-full py-4 uppercase font-bold tracking-widest text-sm transition-all ${plan.recommended ? 'bg-[#CBFF00] text-black' : 'bg-white/5 text-white hover:bg-white/10'}`}>
+                  Select Plan
+                </div>
+              </StarBorder>
             </motion.div>
           ))}
         </div>

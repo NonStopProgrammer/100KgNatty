@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Dumbbell } from 'lucide-react';
+import StarBorder from './StarBorder';
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -43,9 +44,12 @@ const Navbar: React.FC = () => {
               {link.name}
             </a>
           ))}
-          <button className="px-6 py-2 border-2 border-[#CBFF00] text-[#CBFF00] font-bold uppercase text-xs tracking-widest hover:bg-[#CBFF00] hover:text-black transition-all">
-            Join Now
-          </button>
+          
+          <StarBorder as="button" thickness={2} speed="3s" className="rounded-sm group overflow-hidden">
+            <div className="px-6 py-2 bg-black text-[#CBFF00] font-bold uppercase text-xs tracking-widest group-hover:bg-[#CBFF00] group-hover:text-black transition-all">
+              Join Now
+            </div>
+          </StarBorder>
         </div>
 
         {/* Mobile Toggle */}
@@ -73,6 +77,13 @@ const Navbar: React.FC = () => {
                 {link.name}
               </a>
             ))}
+            <div className="flex justify-center mt-4">
+              <StarBorder as="button" thickness={2} speed="3s" className="rounded-sm w-full max-w-[200px]">
+                <div className="py-3 bg-black text-[#CBFF00] font-bold uppercase text-sm tracking-widest w-full">
+                  Join Now
+                </div>
+              </StarBorder>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

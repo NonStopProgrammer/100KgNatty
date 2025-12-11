@@ -15,6 +15,7 @@ import Packages from './components/Packages';
 import Testimonials from './components/Testimonials';
 import AIConsultant from './components/AIConsultant';
 import Footer from './components/Footer';
+import StarBorder from './components/StarBorder';
 
 const App: React.FC = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -124,17 +125,24 @@ const App: React.FC = () => {
 
       <Footer />
 
-      {/* Persistent AI Interface Trigger */}
-      <motion.button 
+      {/* Persistent AI Interface Trigger with StarBorder Effect */}
+      <motion.div 
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
-        whileHover={{ scale: 1.1, rotate: 5 }}
-        whileTap={{ scale: 0.9 }}
-        onClick={() => setIsChatOpen(true)}
-        className="fixed bottom-10 right-10 w-16 h-16 bg-[#CBFF00] text-black rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(203,255,0,0.3)] z-50 accent-glow"
+        className="fixed bottom-10 right-10 z-50"
       >
-        <Zap size={28} className="fill-current" />
-      </motion.button>
+        <StarBorder 
+          as="button" 
+          thickness={3} 
+          speed="3s" 
+          className="rounded-full shadow-[0_0_30px_rgba(203,255,0,0.3)]"
+          onClick={() => setIsChatOpen(true)}
+        >
+          <div className="w-16 h-16 bg-[#CBFF00] text-black rounded-full flex items-center justify-center">
+            <Zap size={28} className="fill-current" />
+          </div>
+        </StarBorder>
+      </motion.div>
 
       <AnimatePresence>
         {isChatOpen && (
