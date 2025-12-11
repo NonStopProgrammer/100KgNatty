@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Users, 
@@ -19,6 +19,7 @@ import StarBorder from './components/StarBorder';
 
 const App: React.FC = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
 
   const stats = [
     { label: 'Elite Clients', value: '500+', icon: Users },
@@ -51,16 +52,22 @@ const App: React.FC = () => {
     },
   ];
 
+  useEffect(() => {
+    document.body.classList.remove('theme-dark', 'theme-light');
+    document.body.classList.add(theme === 'dark' ? 'theme-dark' : 'theme-light');
+  }, [theme]);
+
   return (
-    <div className="relative min-h-screen bg-[#050505] text-white overflow-x-hidden selection:bg-[#CBFF00] selection:text-black">
-      <Navbar />
+    <div className={`relative min-h-screen overflow-x-hidden selection:bg-[#CBFF00] selection:text-black ${theme === 'light' ? 'bg-white text-black' : 'bg-[#050505] text-white'}`}>
+      <Navbar theme={theme} onToggleTheme={() => setTheme(theme === 'dark' ? 'light' : 'dark')} />
       
       <main>
         <Hero />
         
         {/* Performance Metrics Section */}
-        <section className="py-16 border-y border-white/5 bg-white/[0.01]">
-          <div className="max-w-7xl mx-auto px-4">
+        <section className="py-16 border-y border-white/5 bg-white/[0.01] relative overflow-hidden">
+          <div className="absolute inset-0 pointer-events-none opacity-40 bg-[radial-gradient(circle_at_20%_20%,rgba(203,255,0,0.08),transparent_35%),radial-gradient(circle_at_80%_0%,rgba(203,255,0,0.06),transparent_30%)]"></div>
+          <div className="max-w-7xl mx-auto px-4 relative">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-12">
               {stats.map((stat, i) => {
                 const Icon = stat.icon;
@@ -71,13 +78,19 @@ const App: React.FC = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ delay: i * 0.1 }}
                     viewport={{ once: true }}
-                    className="text-center group"
+                    whileHover={{ scale: 1.05, y: -4 }}
+                    className="text-center group relative overflow-hidden"
                   >
-                    <div className="flex justify-center mb-4 text-gray-500 group-hover:text-[#CBFF00] transition-colors duration-500">
+                    <motion.div 
+                      className="absolute inset-0 bg-gradient-to-b from-[#CBFF00]/0 via-[#CBFF00]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                      animate={{ opacity: [0.04, 0.08, 0.04] }}
+                      transition={{ repeat: Infinity, duration: 6, ease: "easeInOut", delay: i * 0.3 }}
+                    />
+                    <div className="flex justify-center mb-4 text-gray-500 group-hover:text-[#CBFF00] transition-colors duration-500 relative z-10">
                       <Icon size={24} />
                     </div>
-                    <div className="text-4xl font-bold font-oswald text-white mb-1">{stat.value}</div>
-                    <div className="text-[10px] text-gray-500 uppercase tracking-[0.3em] font-bold">{stat.label}</div>
+                    <div className="text-4xl font-bold font-oswald text-white mb-1 relative z-10">{stat.value}</div>
+                    <div className="text-[10px] text-gray-500 uppercase tracking-[0.3em] font-bold relative z-10">{stat.label}</div>
                   </motion.div>
                 );
               })}
