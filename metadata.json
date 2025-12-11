@@ -1,0 +1,8 @@
+{
+  "name": "PowerOn Fitness Elite",
+  "description": "A high-performance personal training landing page featuring an AI Fitness Consultant, interactive training programs, and sleek Framer Motion animations.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
