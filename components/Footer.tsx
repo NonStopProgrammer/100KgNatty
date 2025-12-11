@@ -12,10 +12,10 @@ const Footer: React.FC = () => {
               <div className="w-8 h-8 bg-[#CBFF00] flex items-center justify-center">
                 <Dumbbell size={18} className="text-black" />
               </div>
-              <span className="text-xl font-oswald font-bold tracking-tighter uppercase">Power<span className="text-[#CBFF00]">On</span></span>
+              <span className="text-xl font-oswald font-bold tracking-tighter uppercase">100KG<span className="text-[#CBFF00]">Natty</span></span>
             </div>
             <p className="text-gray-500 text-sm leading-relaxed mb-6">
-              Excellence in human performance. We build machines, not just muscles.
+              Excellence in human performance led by Aravindh — lifetime natural bodybuilder, Mr. Tamilnadu, ICN Nationals.
             </p>
             <div className="flex gap-4">
               {[Instagram, Twitter, Youtube, Mail].map((Icon, i) => (

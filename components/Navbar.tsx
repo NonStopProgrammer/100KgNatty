@@ -30,7 +30,7 @@ const Navbar: React.FC = () => {
           <div className="w-10 h-10 bg-[#CBFF00] flex items-center justify-center rounded-sm transition-transform group-hover:rotate-12">
             <Dumbbell size={24} className="text-black" />
           </div>
-          <span className="text-2xl font-oswald font-bold tracking-tighter uppercase">Power<span className="text-[#CBFF00]">On</span></span>
+          <span className="text-2xl font-oswald font-bold tracking-tighter uppercase">100KG<span className="text-[#CBFF00]">Natty</span></span>
         </a>
 
         {/* Desktop Menu */}

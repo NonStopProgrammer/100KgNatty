@@ -7,21 +7,21 @@ const Packages: React.FC = () => {
   const plans = [
     {
       name: "Starter",
-      price: "$149",
+      price: "₹7,999",
       period: "/month",
       features: ["Custom Workout Plan", "Weekly Check-ins", "Nutrition Guide", "Discord Access"],
       recommended: false
     },
     {
       name: "Performance",
-      price: "$299",
+      price: "₹14,999",
       period: "/month",
       features: ["Advanced Programming", "24/7 Priority Support", "Custom Macros", "Form Reviews", "Supplements Guide"],
       recommended: true
     },
     {
-      name: "Elite Elite",
-      price: "$599",
+      name: "Elite",
+      price: "₹29,999",
       period: "/month",
       features: ["Daily Communication", "Bloodwork Analysis", "Grocery Concierge", "Bi-Weekly Video Calls", "Full Lifestyle Design"],
       recommended: false
@@ -33,7 +33,7 @@ const Packages: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-oswald font-bold mb-4 uppercase">Choose Your <span className="text-[#CBFF00]">Path</span></h2>
-          <p className="text-gray-400">Scalable training solutions for every level of commitment.</p>
+          <p className="text-gray-400">INR pricing, coached directly by Aravindh. Scalable training solutions for every level of commitment.</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

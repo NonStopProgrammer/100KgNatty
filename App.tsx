@@ -24,7 +24,31 @@ const App: React.FC = () => {
     { label: 'Elite Clients', value: '500+', icon: Users },
     { label: 'Years Exp', value: '12+', icon: Timer },
     { label: 'Transformations', value: '250+', icon: Flame },
-    { label: 'Pro Certs', value: '18', icon: Trophy },
+    { label: 'Natty Titles', value: 'Mr TN • ICN', icon: Trophy },
+  ];
+
+  const successStories = [
+    {
+      id: '01',
+      title: 'Bench +22kg in 10 weeks',
+      location: 'Chennai',
+      image: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1200&q=80',
+      note: 'Lifetime natty — stronger joints, faster bar speed.'
+    },
+    {
+      id: '02',
+      title: 'Lean, strong, stress-proof',
+      location: 'Bengaluru',
+      image: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1200&q=80',
+      note: '8 kg fat down, lifts intact, sleep dialed.'
+    },
+    {
+      id: '03',
+      title: 'Stage-ready conditioning',
+      location: 'Delhi',
+      image: 'https://images.unsplash.com/photo-1507537509458-b8312d35a233?auto=format&fit=crop&w=1200&q=80',
+      note: 'ICN prep — no PEDs, only precise programming and fueling.'
+    },
   ];
 
   return (
@@ -36,26 +60,31 @@ const App: React.FC = () => {
         
         {/* Performance Metrics Section */}
         <section className="py-16 border-y border-white/5 bg-white/[0.01]">
-          <div className="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-12">
-            {stats.map((stat, i) => {
-              const Icon = stat.icon;
-              return (
-                <motion.div 
-                  key={i}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.1 }}
-                  viewport={{ once: true }}
-                  className="text-center group"
-                >
-                  <div className="flex justify-center mb-4 text-gray-500 group-hover:text-[#CBFF00] transition-colors duration-500">
-                    <Icon size={24} />
-                  </div>
-                  <div className="text-4xl font-bold font-oswald text-white mb-1">{stat.value}</div>
-                  <div className="text-[10px] text-gray-500 uppercase tracking-[0.3em] font-bold">{stat.label}</div>
-                </motion.div>
-              );
-            })}
+          <div className="max-w-7xl mx-auto px-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-12">
+              {stats.map((stat, i) => {
+                const Icon = stat.icon;
+                return (
+                  <motion.div 
+                    key={i}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.1 }}
+                    viewport={{ once: true }}
+                    className="text-center group"
+                  >
+                    <div className="flex justify-center mb-4 text-gray-500 group-hover:text-[#CBFF00] transition-colors duration-500">
+                      <Icon size={24} />
+                    </div>
+                    <div className="text-4xl font-bold font-oswald text-white mb-1">{stat.value}</div>
+                    <div className="text-[10px] text-gray-500 uppercase tracking-[0.3em] font-bold">{stat.label}</div>
+                  </motion.div>
+                );
+              })}
+            </div>
+            <div className="mt-10 text-center text-[#CBFF00] text-xs font-bold uppercase tracking-[0.35em]">
+              “Train heavy, stay natty, outlast everyone.”
+            </div>
           </div>
         </section>
 
@@ -75,8 +104,11 @@ const App: React.FC = () => {
                     <span className="text-[#CBFF00] drop-shadow-[0_0_20px_rgba(203,255,0,0.2)]">Success.</span>
                   </motion.h2>
                   <p className="text-gray-400 text-lg leading-relaxed max-w-xl">
-                    Beyond simple exercise. We deliver precise physiological adaptations tailored to your unique genetic blueprint.
+                    Beyond simple exercise. Aravindh’s athletes are coached for resilient joints, clean strength, and year-round natty compliance.
                   </p>
+                  <div className="mt-4 text-[#CBFF00] text-xs font-bold uppercase tracking-[0.3em]">
+                    “Discipline is anabolic. Excuses are catabolic.”
+                  </div>
                 </div>
                 <motion.button 
                   whileHover={{ scale: 1.05 }}
@@ -88,28 +120,25 @@ const App: React.FC = () => {
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {[1, 2, 3].map((item) => (
+                {successStories.map((story, idx) => (
                   <motion.div 
-                    key={item}
+                    key={story.id}
                     initial={{ opacity: 0, scale: 0.95 }}
                     whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: item * 0.15 }}
+                    transition={{ delay: idx * 0.15 }}
                     viewport={{ once: true }}
                     className="relative aspect-[4/5] group overflow-hidden bg-[#111] rounded-sm"
                   >
                     <img 
-                      src={`https://images.unsplash.com/photo-${[
-                        '1534438327276-14e5300c3a48', 
-                        '1581009146145-b5ef03a74b1b', 
-                        '1571019613454-1cb2f99b2d8b'
-                      ][item-1]}?auto=format&fit=crop&w=800&q=80`} 
+                      src={story.image} 
                       className="w-full h-full object-cover opacity-50 group-hover:opacity-70 transition-all duration-700 group-hover:scale-110" 
-                      alt="Performance"
+                      alt={story.title}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60"></div>
                     <div className="absolute bottom-0 left-0 p-8 w-full translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
-                      <div className="text-[10px] text-[#CBFF00] font-bold uppercase tracking-[0.3em] mb-2">Subject 0{item}</div>
-                      <div className="text-white font-oswald text-2xl font-bold uppercase tracking-tight mb-4">Functional Peak Reached</div>
+                      <div className="text-[10px] text-[#CBFF00] font-bold uppercase tracking-[0.3em] mb-1">Case {story.id} • {story.location}</div>
+                      <div className="text-white font-oswald text-2xl font-bold uppercase tracking-tight mb-3">{story.title}</div>
+                      <div className="text-sm text-gray-300 mb-3">{story.note}</div>
                       <div className="h-1 w-0 bg-[#CBFF00] group-hover:w-full transition-all duration-700"></div>
                     </div>
                   </motion.div>

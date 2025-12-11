@@ -1,11 +1,22 @@
 
 import { GoogleGenAI } from "@google/genai";
 
-// Use process.env.API_KEY directly as per guidelines for initialization
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+const resolveApiKey = () =>
+  import.meta.env.VITE_GEMINI_API_KEY ||
+  process.env.GEMINI_API_KEY ||
+  process.env.API_KEY;
 
 export const getFitnessAdvice = async (prompt: string) => {
   try {
+    const apiKey = resolveApiKey();
+
+    if (!apiKey) {
+      console.error("Gemini API key missing. Set VITE_GEMINI_API_KEY in your environment.");
+      return "I need a valid Gemini API key to respond. Please add your API key and try again.";
+    }
+
+    const ai = new GoogleGenAI({ apiKey });
+
     const response = await ai.models.generateContent({
       model: 'gemini-2.5-flash',
       contents: prompt,

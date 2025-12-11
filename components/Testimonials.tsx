@@ -6,52 +6,81 @@ import { Star } from 'lucide-react';
 const Testimonials: React.FC = () => {
   const reviews = [
     {
-      name: "Marcus Thorne",
-      role: "Professional Athlete",
-      text: "PowerOn completely rewired how I approach my off-season. The data-driven programming is unmatched in the industry.",
-      image: "https://picsum.photos/seed/user1/200/200"
+      name: "Arjun Raj",
+      role: "Powerlifter • Chennai",
+      text: "Aravindh fixed my squat pattern and sleep in 6 weeks. Zero PEDs, just precise cues and recovery work.",
+      image: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=200&q=80"
     },
     {
-      name: "Sarah Jenkins",
-      role: "Executive",
-      text: "Balancing a high-stress career and fitness was impossible until I joined the Performance tier. Efficiency and results.",
-      image: "https://picsum.photos/seed/user2/200/200"
+      name: "Meera Subramanian",
+      role: "Founder • Chennai",
+      text: "Between late-night calls and flights, the natty-friendly programming kept me leaner and calmer than ever.",
+      image: "https://images.unsplash.com/photo-1524504388940-25e0ea74a3ad?auto=format&fit=crop&w=200&q=80"
     },
     {
-      name: "David Chen",
-      role: "Bodybuilder",
-      text: "The nutritional insight alone is worth the price. I reached single-digit body fat while feeling stronger than ever.",
-      image: "https://picsum.photos/seed/user3/200/200"
+      name: "Rahul Verma",
+      role: "Consultant • Delhi",
+      text: "Dropped 9 kg while hitting PRs. Every check-in felt like having a national champ in my corner.",
+      image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80"
+    },
+    {
+      name: "Priya Kulkarni",
+      role: "Product Lead • Mumbai",
+      text: "Lean mass up, stress down. The habit tracking and joint prep blocks are gold for busy lifters.",
+      image: "https://images.unsplash.com/photo-1524504388940-8e1e6db7e89d?auto=format&fit=crop&w=200&q=80"
+    },
+    {
+      name: "Sanjay Iyer",
+      role: "Coach • Coimbatore",
+      text: "Used Aravindh’s templates for my athletes. Clean strength gains without burnout — truly natty-friendly.",
+      image: "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=200&q=80"
+    },
+    {
+      name: "Zoya Khan",
+      role: "Designer • Hyderabad",
+      text: "Knee pain gone, posture fixed. The mobility primers before lifts were the missing link for me.",
+      image: "https://images.unsplash.com/photo-1524504388940-25e0ea74a3ad?auto=format&fit=crop&w=200&q=80"
     }
   ];
 
+  const marqueeReviews = [...reviews, ...reviews];
+
   return (
-    <section className="py-24 bg-black overflow-hidden">
+    <section className="py-24 bg-black overflow-hidden relative">
+      <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-black via-black to-transparent pointer-events-none z-10"></div>
+      <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-black via-black to-transparent pointer-events-none z-10"></div>
       <div className="max-w-7xl mx-auto px-4">
-        <h2 className="text-4xl font-oswald font-bold mb-16 uppercase text-center">Elite <span className="text-[#CBFF00]">Voices</span></h2>
+        <div className="text-center mb-10">
+          <h2 className="text-4xl font-oswald font-bold uppercase">Client Results</h2>
+          <p className="text-gray-500 mt-3 text-sm max-w-2xl mx-auto">Real lifters, coached by Aravindh. Clean strength gains, better recovery, and stage-worthy conditioning.</p>
+        </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {reviews.map((review, i) => (
-            <motion.div
-              key={review.name}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ delay: i * 0.1 }}
-              className="glass-card p-8 relative"
-            >
-              <div className="flex gap-1 text-[#CBFF00] mb-6">
-                {[...Array(5)].map((_, i) => <Star key={i} size={16} fill="#CBFF00" />)}
-              </div>
-              <p className="text-gray-300 italic mb-8">"{review.text}"</p>
-              <div className="flex items-center gap-4">
-                <img src={review.image} className="w-12 h-12 rounded-full border border-[#CBFF00]/30" alt={review.name} />
-                <div>
-                  <div className="font-bold uppercase tracking-tight">{review.name}</div>
-                  <div className="text-xs text-[#CBFF00] uppercase tracking-widest">{review.role}</div>
+        <div className="overflow-hidden">
+          <motion.div
+            className="flex gap-6"
+            animate={{ x: ['0%', '-50%'] }}
+            transition={{ x: { repeat: Infinity, repeatType: 'loop', duration: 35, ease: 'linear' } }}
+          >
+            {marqueeReviews.map((review, i) => (
+              <motion.div
+                key={`${review.name}-${i}`}
+                whileHover={{ scale: 1.02, y: -4 }}
+                className="glass-card p-8 relative w-[320px] md:w-[360px] lg:w-[380px] flex-shrink-0"
+              >
+                <div className="flex gap-1 text-[#CBFF00] mb-6">
+                  {[...Array(5)].map((_, starIdx) => <Star key={starIdx} size={16} fill="#CBFF00" />)}
                 </div>
-              </div>
-            </motion.div>
-          ))}
+                <p className="text-gray-300 italic mb-8 leading-relaxed">"{review.text}"</p>
+                <div className="flex items-center gap-4">
+                  <img src={review.image} className="w-12 h-12 rounded-full border border-[#CBFF00]/30 object-cover" alt={review.name} />
+                  <div>
+                    <div className="font-bold uppercase tracking-tight">{review.name}</div>
+                    <div className="text-xs text-[#CBFF00] uppercase tracking-widest">{review.role}</div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
       </div>
     </section>

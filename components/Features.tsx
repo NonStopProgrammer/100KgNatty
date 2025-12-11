@@ -44,7 +44,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ title, description, icon, del
         rotateY,
         transformStyle: "preserve-3d",
       }}
-      className="glass-card p-10 group relative overflow-hidden transition-colors hover:border-[#CBFF00]/50"
+      className="glass-card p-10 group relative overflow-hidden transition-colors hover:border-[#CBFF00]/50 flex flex-col"
     >
       <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-20 transition-opacity">
          {icon}
@@ -63,7 +63,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ title, description, icon, del
         </p>
       </div>
 
-      <div className="mt-8 pt-6 border-t border-white/5 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity translate-y-2 group-hover:translate-y-0 duration-300">
+      <div className="mt-8 pt-6 border-t border-white/5 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity translate-y-2 group-hover:translate-y-0 duration-300 mt-auto">
         <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#CBFF00]">View Details</span>
         <TrendingUp size={14} className="text-[#CBFF00]" />
       </div>
@@ -99,13 +99,22 @@ const Features: React.FC = () => {
               <span className="text-[#CBFF00]">Performance.</span>
             </motion.h2>
           </div>
-          <motion.p 
-             initial={{ opacity: 0 }}
-             whileInView={{ opacity: 1 }}
-             className="text-gray-500 max-w-sm text-sm leading-relaxed"
-          >
-            We don't believe in generic routines. Our systems are forged through rigorous testing and athletic science.
-          </motion.p>
+          <div className="space-y-3 max-w-sm">
+            <motion.p 
+               initial={{ opacity: 0 }}
+               whileInView={{ opacity: 1 }}
+               className="text-gray-500 text-sm leading-relaxed"
+            >
+              Built by Aravindh — lifetime natural, Mr. Tamilnadu, ICN BodyBuilding Nationals — every protocol is field-tested, ethical, and brutally effective.
+            </motion.p>
+            <motion.div 
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              className="text-[#CBFF00] text-xs font-bold uppercase tracking-[0.3em]"
+            >
+              “Train clean. Lift heavy. Stay natty.”
+            </motion.div>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -118,13 +127,13 @@ const Features: React.FC = () => {
           <ServiceCard 
             icon={<Shield size={24} />}
             title="Bio-Shield"
-            description="Injury prevention protocols designed to bulletproof your joints and connective tissue."
+            description="Injury-proofing focused on rotator cuffs, lumbar stability, and tendon conditioning. Weekly mobility audits to keep you lifting for decades."
             delay={0.2}
           />
           <ServiceCard 
             icon={<Zap size={24} />}
             title="Neural Drive"
-            description="CNS optimization to increase motor unit recruitment and reaction speed."
+            description="CNS priming blocks to sharpen motor unit recruitment, bar speed, and mind-muscle connection without frying your recovery."
             delay={0.3}
           />
           <ServiceCard 
