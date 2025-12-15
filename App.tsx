@@ -8,9 +8,11 @@ import { Pricing } from './components/Pricing';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { ProgramDetails } from './components/ProgramDetails';
+import { PrivacyPolicy } from './components/PrivacyPolicy';
+import { TermsOfService } from './components/TermsOfService';
 
 const App: React.FC = () => {
-  const [currentView, setCurrentView] = useState<'home' | 'program'>('home');
+  const [currentView, setCurrentView] = useState<'home' | 'program' | 'privacy' | 'terms'>('home');
   const [selectedProgramId, setSelectedProgramId] = useState<string | null>(null);
 
   const handleProgramSelect = (id: string) => {
@@ -22,7 +24,7 @@ const App: React.FC = () => {
   const handleBackToHome = (targetSectionId?: string) => {
     setCurrentView('home');
     setSelectedProgramId(null);
-    
+
     // If a target section is provided, scroll to it after the view renders
     if (targetSectionId) {
       setTimeout(() => {
@@ -38,9 +40,28 @@ const App: React.FC = () => {
         }
       }, 100);
     } else {
-       window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
+
+  // Handle footer link clicks
+  React.useEffect(() => {
+    const handleLinkClick = (e: MouseEvent) => {
+      const target = e.target as HTMLAnchorElement;
+      if (target.href?.includes('/privacy-policy')) {
+        e.preventDefault();
+        setCurrentView('privacy');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (target.href?.includes('/terms-of-service')) {
+        e.preventDefault();
+        setCurrentView('terms');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    };
+
+    document.addEventListener('click', handleLinkClick);
+    return () => document.removeEventListener('click', handleLinkClick);
+  }, []);
 
   return (
     <div className="w-full min-h-screen bg-black overflow-x-hidden">
@@ -67,12 +88,13 @@ const App: React.FC = () => {
               <Contact />
             </section>
           </>
-        ) : (
-          <ProgramDetails 
-            programId={selectedProgramId || 'hypertrophy'} 
-            onBack={() => handleBackToHome()} 
-          />
-        )}
+        ) : currentView === 'program' && selectedProgramId ? (
+          <ProgramDetails programId={selectedProgramId} onBack={() => handleBackToHome()} />
+        ) : currentView === 'privacy' ? (
+          <PrivacyPolicy onBack={() => handleBackToHome()} />
+        ) : currentView === 'terms' ? (
+          <TermsOfService onBack={() => handleBackToHome()} />
+        ) : null}
       </main>
       <Footer />
     </div>

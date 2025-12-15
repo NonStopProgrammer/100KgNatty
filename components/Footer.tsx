@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Instagram, Youtube, Twitter, MapPin, Mail, Phone } from 'lucide-react';
+import { Instagram, Youtube, MapPin, Mail, Phone } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   return (
@@ -28,23 +28,16 @@ export const Footer: React.FC = () => {
               <h4 className="text-white font-bold uppercase tracking-wider text-sm mb-4">Connect With Us</h4>
               <div className="flex gap-3">
                 <a
-                  href="https://instagram.com"
+                  href="https://www.instagram.com/trainwitharavindh"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group w-12 h-12 flex items-center justify-center rounded-xl bg-neutral-900 hover:bg-gradient-to-br hover:from-purple-500 hover:to-pink-500 text-neutral-400 hover:text-white transition-all duration-300 shadow-lg hover:shadow-pink-500/50 hover:scale-110"
                 >
                   <Instagram className="w-5 h-5" />
                 </a>
+
                 <a
-                  href="https://twitter.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group w-12 h-12 flex items-center justify-center rounded-xl bg-neutral-900 hover:bg-blue-500 text-neutral-400 hover:text-white transition-all duration-300 shadow-lg hover:shadow-blue-500/50 hover:scale-110"
-                >
-                  <Twitter className="w-5 h-5" />
-                </a>
-                <a
-                  href="https://youtube.com"
+                  href="https://www.youtube.com/@aravindhanbusekar2528"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group w-12 h-12 flex items-center justify-center rounded-xl bg-neutral-900 hover:bg-red-600 text-neutral-400 hover:text-white transition-all duration-300 shadow-lg hover:shadow-red-600/50 hover:scale-110"
@@ -93,8 +86,8 @@ export const Footer: React.FC = () => {
               <li className="flex items-start gap-3 group">
                 <MapPin className="w-5 h-5 text-lime-500 shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
                 <div className="text-sm">
-                  <p className="text-neutral-300 font-medium">Iron District Gym</p>
-                  <p className="text-neutral-500">Chennai, TN 600001</p>
+                  <p className="text-neutral-300 font-medium">Navalur</p>
+                  <p className="text-neutral-500">Chennai, Tamilnadu</p>
                 </div>
               </li>
               <li className="flex items-center gap-3 group">
@@ -126,11 +119,9 @@ export const Footer: React.FC = () => {
               © 2025 100KG NATTY. All Rights Reserved.
             </p>
             <div className="flex items-center gap-6 text-xs text-neutral-500">
-              <a href="#" className="hover:text-lime-400 transition-colors">Privacy Policy</a>
+              <a href="/privacy-policy" className="hover:text-lime-400 transition-colors">Privacy Policy</a>
               <span className="w-px h-4 bg-neutral-800"></span>
-              <a href="#" className="hover:text-lime-400 transition-colors">Terms of Service</a>
-              <span className="w-px h-4 bg-neutral-800"></span>
-              <span className="text-neutral-600">Built with 💪 & Code</span>
+              <a href="/terms-of-service" className="hover:text-lime-400 transition-colors">Terms of Service</a>
             </div>
           </div>
         </div>

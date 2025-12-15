@@ -1,33 +1,32 @@
-
-import React, { useState, useEffect } from 'react';
-import { Quote, ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { Quote, Star, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Reveal } from './Reveal';
 
 export const Transformations: React.FC = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [sliderPosition, setSliderPosition] = useState(50);
-  const [isDragging, setIsDragging] = useState(false);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const transformations = [
     {
       name: "Arjun S.",
-      program: "Hypertrophy V.02",
+      program: "Hypertrophy",
       result: "+10kg Muscle",
       duration: "6 Months",
-      quote: "Being a vegetarian, I thought building muscle was impossible. Coach Aravindh's diet plan changed everything.",
-      beforeImage: "/assets/images/transformations/arjun_before.png",
-      afterImage: "/assets/images/transformations/arjun_after.png",
-      stats: { before: "62kg", after: "72kg" }
+      quote: "Being a vegetarian, I thought building muscle was impossible. Coach's diet plan changed everything.",
+      beforeImage: "/assets/images/transformations/transform_arjun_before_new_1765792584807.png",
+      afterImage: "/assets/images/transformations/transform_arjun_after_new_1765792620925.png",
+      stats: { before: "62kg", after: "72kg" },
+      rating: 5
     },
     {
       name: "Priya V.",
       program: "Shred Protocol",
       result: "-15kg Fat",
       duration: "4 Months",
-      quote: "The nutrition plan was actually sustainable and traditional. Lost weight without missing home food.",
+      quote: "The nutrition plan was sustainable and traditional. Lost weight without missing home food.",
       beforeImage: "/assets/images/transformations/priya_before.png",
       afterImage: "/assets/images/transformations/priya_after.png",
-      stats: { before: "75kg", after: "60kg" }
+      stats: { before: "75kg", after: "60kg" },
+      rating: 5
     },
     {
       name: "Rahul M.",
@@ -37,39 +36,39 @@ export const Transformations: React.FC = () => {
       quote: "My deadlift went from 140kg to 220kg. The biomechanics feedback was absolute gold.",
       beforeImage: "/assets/images/transformations/rahul_before.png",
       afterImage: "/assets/images/transformations/rahul_after.png",
-      stats: { before: "140kg DL", after: "220kg DL" }
+      stats: { before: "140kg DL", after: "220kg DL" },
+      rating: 5
+    },
+    {
+      name: "Vikram K.",
+      program: "Hybrid Coaching",
+      result: "+12kg Muscle",
+      duration: "10 Months",
+      quote: "The 1-on-1 coaching made all the difference. Form corrections and weekly check-ins kept me accountable.",
+      beforeImage: "/assets/images/transformations/transform_vikram_before_1765794690429.png",
+      afterImage: "/assets/images/transformations/transform_vikram_after_1765794720630.png",
+      stats: { before: "68kg", after: "80kg" },
+      rating: 5
     }
   ];
 
-  // Auto-advance carousel
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % transformations.length);
-    }, 8000);
-    return () => clearInterval(interval);
-  }, [transformations.length]);
+  const scroll = (direction: 'left' | 'right') => {
+    if (scrollContainerRef.current) {
+      const scrollAmount = 400;
+      const newScrollLeft = direction === 'left'
+        ? scrollContainerRef.current.scrollLeft - scrollAmount
+        : scrollContainerRef.current.scrollLeft + scrollAmount;
 
-  const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % transformations.length);
-  };
-
-  const prevSlide = () => {
-    setCurrentIndex((prev) => (prev - 1 + transformations.length) % transformations.length);
-  };
-
-  const current = transformations[currentIndex];
-
-  // Handle slider dragging
-  const handleSliderMove = (clientX: number, container: HTMLElement) => {
-    const rect = container.getBoundingClientRect();
-    const x = clientX - rect.left;
-    const percentage = Math.max(0, Math.min(100, (x / rect.width) * 100));
-    setSliderPosition(percentage);
+      scrollContainerRef.current.scrollTo({
+        left: newScrollLeft,
+        behavior: 'smooth'
+      });
+    }
   };
 
   return (
     <section className="py-24 bg-black relative overflow-hidden">
-      {/* Animated background elements */}
+      {/* Animated background */}
       <div className="absolute top-0 left-0 w-96 h-96 bg-lime-500/5 rounded-full blur-3xl animate-pulse-slow"></div>
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-lime-500/5 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '2s' }}></div>
 
@@ -81,158 +80,108 @@ export const Transformations: React.FC = () => {
           <p className="text-neutral-400 text-center mb-16 text-lg">Real People. Real Results. Real Transformations.</p>
         </Reveal>
 
-        {/* Main Before/After Comparison */}
-        <div className="max-w-5xl mx-auto mb-16">
-          <Reveal>
-            <div className="relative bg-neutral-900 rounded-2xl overflow-hidden border-2 border-neutral-800 shadow-2xl">
-              {/* Before/After Slider */}
-              <div
-                className="relative aspect-[16/9] overflow-hidden cursor-ew-resize select-none"
-                onMouseDown={(e) => {
-                  setIsDragging(true);
-                  handleSliderMove(e.clientX, e.currentTarget);
-                }}
-                onMouseMove={(e) => {
-                  if (isDragging) {
-                    handleSliderMove(e.clientX, e.currentTarget);
-                  }
-                }}
-                onMouseUp={() => setIsDragging(false)}
-                onMouseLeave={() => setIsDragging(false)}
-                onTouchStart={(e) => {
-                  setIsDragging(true);
-                  handleSliderMove(e.touches[0].clientX, e.currentTarget);
-                }}
-                onTouchMove={(e) => {
-                  if (isDragging) {
-                    handleSliderMove(e.touches[0].clientX, e.currentTarget);
-                  }
-                }}
-                onTouchEnd={() => setIsDragging(false)}
-              >
-                {/* After Image (Full) */}
-                <div className="absolute inset-0">
-                  <img
-                    src={current.afterImage}
-                    alt={`${current.name} After`}
-                    className="w-full h-full object-cover object-top"
-                    draggable="false"
-                  />
-                  <div className="absolute top-4 right-4 bg-lime-500 text-black px-4 py-2 rounded-lg font-bold uppercase text-sm skew-x-[-6deg] shadow-lg animate-float">
-                    <span className="block skew-x-[6deg]">After</span>
-                  </div>
-                </div>
+        {/* Scroll Container with Navigation */}
+        <div className="relative">
+          {/* Left Scroll Button */}
+          <button
+            onClick={() => scroll('left')}
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-neutral-900/90 backdrop-blur border-2 border-lime-500/30 hover:border-lime-500 text-white hover:bg-lime-500 hover:text-black transition-all flex items-center justify-center shadow-lg hover:shadow-lime-500/50 -translate-x-6 hover:scale-110"
+          >
+            <ChevronLeft className="w-6 h-6" />
+          </button>
 
-                {/* Before Image (Clipped) */}
-                <div
-                  className="absolute inset-0 transition-all duration-100 pointer-events-none"
-                  style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
-                >
-                  <img
-                    src={current.beforeImage}
-                    alt={`${current.name} Before`}
-                    className="w-full h-full object-cover object-top"
-                    draggable="false"
-                  />
-                  <div className="absolute top-4 left-4 bg-neutral-800 text-white px-4 py-2 rounded-lg font-bold uppercase text-sm skew-x-[-6deg] shadow-lg">
-                    <span className="block skew-x-[6deg]">Before</span>
-                  </div>
-                </div>
+          {/* Horizontal Scroll Container */}
+          <div
+            ref={scrollContainerRef}
+            className="flex gap-8 overflow-x-auto scroll-smooth pb-4 px-2 scrollbar-hide"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          >
+            {transformations.map((transformation, idx) => (
+              <div key={idx} className="flex-shrink-0 w-[350px]">
+                <div className="group cursor-pointer h-full">
+                  {/* Before/After Images */}
+                  <div className="relative aspect-[3/4] overflow-hidden rounded-xl border-2 border-neutral-800 mb-4 group-hover:border-lime-500 transition-all duration-300">
+                    {/* Before Image */}
+                    <div className="absolute inset-0">
+                      <img
+                        src={transformation.beforeImage}
+                        alt={`${transformation.name} Before`}
+                        className="w-full h-full object-cover object-top grayscale group-hover:grayscale-0 transition-all duration-500"
+                      />
+                      <div className="absolute top-3 left-3 bg-neutral-900/90 backdrop-blur-sm px-3 py-1 rounded-md">
+                        <span className="text-white text-xs font-bold uppercase">Before</span>
+                      </div>
+                    </div>
 
-                {/* Slider Handle */}
-                <div
-                  className="absolute top-0 bottom-0 w-1 bg-lime-500 z-20 shadow-[0_0_20px_rgba(132,204,22,0.5)] pointer-events-none"
-                  style={{ left: `${sliderPosition}%` }}
-                >
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-lime-500 rounded-full flex items-center justify-center shadow-lg pointer-events-auto cursor-ew-resize">
-                    <div className="flex gap-1">
-                      <ChevronLeft className="w-4 h-4 text-black" />
-                      <ChevronRight className="w-4 h-4 text-black" />
+                    {/* After Image - Slides in on hover */}
+                    <div className="absolute inset-0 translate-x-full group-hover:translate-x-0 transition-transform duration-500">
+                      <img
+                        src={transformation.afterImage}
+                        alt={`${transformation.name} After`}
+                        className="w-full h-full object-cover object-top"
+                      />
+                      <div className="absolute top-3 right-3 bg-lime-500 px-3 py-1 rounded-md">
+                        <span className="text-black text-xs font-bold uppercase">After</span>
+                      </div>
+                    </div>
+
+                    {/* Stats Overlay */}
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/90 to-transparent p-4">
+                      <div className="flex justify-between items-end text-sm">
+                        <div>
+                          <p className="text-neutral-400 text-xs uppercase">Before</p>
+                          <p className="text-white font-bold font-sport italic">{transformation.stats.before}</p>
+                        </div>
+                        <div className="text-lime-500 text-xl">→</div>
+                        <div className="text-right">
+                          <p className="text-neutral-400 text-xs uppercase">After</p>
+                          <p className="text-lime-500 font-bold font-sport italic">{transformation.stats.after}</p>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                {/* Stats Overlay */}
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/90 to-transparent p-6 pointer-events-none">
-                  <div className="flex justify-between items-end">
-                    <div className="flex gap-8">
+                  {/* Details Card */}
+                  <div className="bg-neutral-900/50 backdrop-blur border border-neutral-800 rounded-xl p-5 group-hover:bg-neutral-900 group-hover:border-lime-500/30 transition-all duration-300">
+                    {/* Header */}
+                    <div className="flex items-start justify-between mb-3">
                       <div>
-                        <p className="text-neutral-400 text-xs uppercase mb-1">Before</p>
-                        <p className="text-white font-bold text-2xl font-sport italic">{current.stats.before}</p>
+                        <h3 className="font-sport font-black italic text-xl text-white uppercase mb-1">{transformation.name}</h3>
+                        <div className="flex items-center gap-1 mb-2">
+                          {[...Array(transformation.rating)].map((_, i) => (
+                            <Star key={i} className="w-3 h-3 fill-lime-500 text-lime-500" />
+                          ))}
+                        </div>
                       </div>
-                      <div className="flex items-center">
-                        <ArrowRight className="w-6 h-6 text-lime-500" />
-                      </div>
-                      <div>
-                        <p className="text-neutral-400 text-xs uppercase mb-1">After</p>
-                        <p className="text-lime-500 font-bold text-2xl font-sport italic">{current.stats.after}</p>
+                      <div className="text-right">
+                        <p className="text-lime-500 font-bold text-sm font-sport italic">{transformation.result}</p>
+                        <p className="text-neutral-500 text-xs">{transformation.duration}</p>
                       </div>
                     </div>
-                    <div className="text-right">
-                      <p className="text-neutral-400 text-xs uppercase mb-1">Duration</p>
-                      <p className="text-white font-bold text-lg">{current.duration}</p>
+
+                    {/* Program Badge */}
+                    <div className="inline-block bg-lime-500/10 border border-lime-500/30 px-2 py-1 rounded-md mb-3">
+                      <span className="text-lime-400 text-xs font-bold uppercase">{transformation.program}</span>
+                    </div>
+
+                    {/* Quote */}
+                    <div className="flex items-start gap-2">
+                      <Quote className="w-4 h-4 text-lime-500 flex-shrink-0 mt-0.5" />
+                      <p className="text-neutral-300 text-sm italic leading-relaxed line-clamp-3">"{transformation.quote}"</p>
                     </div>
                   </div>
-                </div>
-
-                {/* Drag Instruction (shows on first load) */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black/70 backdrop-blur-sm px-6 py-3 rounded-full pointer-events-none opacity-0 animate-pulse">
-                  <p className="text-white text-sm font-medium flex items-center gap-2">
-                    <ChevronLeft className="w-4 h-4" />
-                    Drag to Compare
-                    <ChevronRight className="w-4 h-4" />
-                  </p>
                 </div>
               </div>
-
-              {/* Transformation Details */}
-              <div className="p-8 bg-neutral-900/50 backdrop-blur">
-                <div className="flex items-start justify-between mb-4">
-                  <div>
-                    <div className="inline-block bg-lime-500/10 border border-lime-500/30 px-3 py-1 rounded-full mb-3">
-                      <span className="text-lime-400 text-xs font-bold uppercase">{current.program}</span>
-                    </div>
-                    <h3 className="font-sport font-black italic text-3xl text-white uppercase mb-2">{current.name}</h3>
-                    <p className="text-lime-500 font-bold text-xl font-sport italic">{current.result}</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <Quote className="w-6 h-6 text-lime-500 flex-shrink-0 mt-1" />
-                  <p className="text-neutral-300 italic text-lg leading-relaxed">"{current.quote}"</p>
-                </div>
-              </div>
-            </div>
-          </Reveal>
-
-          {/* Navigation Controls */}
-          <div className="flex items-center justify-center gap-6 mt-8">
-            <button
-              onClick={prevSlide}
-              className="w-12 h-12 rounded-full bg-neutral-800 hover:bg-lime-500 text-white hover:text-black transition-all flex items-center justify-center group shadow-lg hover:shadow-lime-500/50"
-            >
-              <ChevronLeft className="w-6 h-6 group-hover:scale-110 transition-transform" />
-            </button>
-
-            <div className="flex gap-2">
-              {transformations.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setCurrentIndex(idx)}
-                  className={`h-2 rounded-full transition-all ${idx === currentIndex
-                    ? 'w-8 bg-lime-500'
-                    : 'w-2 bg-neutral-700 hover:bg-neutral-600'
-                    }`}
-                />
-              ))}
-            </div>
-
-            <button
-              onClick={nextSlide}
-              className="w-12 h-12 rounded-full bg-neutral-800 hover:bg-lime-500 text-white hover:text-black transition-all flex items-center justify-center group shadow-lg hover:shadow-lime-500/50"
-            >
-              <ChevronRight className="w-6 h-6 group-hover:scale-110 transition-transform" />
-            </button>
+            ))}
           </div>
+
+          {/* Right Scroll Button */}
+          <button
+            onClick={() => scroll('right')}
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-neutral-900/90 backdrop-blur border-2 border-lime-500/30 hover:border-lime-500 text-white hover:bg-lime-500 hover:text-black transition-all flex items-center justify-center shadow-lg hover:shadow-lime-500/50 translate-x-6 hover:scale-110"
+          >
+            <ChevronRight className="w-6 h-6" />
+          </button>
         </div>
       </div>
     </section>
