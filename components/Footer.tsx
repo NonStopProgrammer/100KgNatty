@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Instagram, Youtube, MapPin, Mail, Phone } from 'lucide-react';
+import { Instagram, Youtube, MapPin, Mail } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   return (
@@ -97,15 +97,6 @@ export const Footer: React.FC = () => {
                   className="text-sm text-neutral-400 hover:text-lime-400 transition-colors"
                 >
                   coach@100kgnatty.com
-                </a>
-              </li>
-              <li className="flex items-center gap-3 group">
-                <Phone className="w-5 h-5 text-lime-500 shrink-0 group-hover:scale-110 transition-transform" />
-                <a
-                  href="tel:+919876543210"
-                  className="text-sm text-neutral-400 hover:text-lime-400 transition-colors"
-                >
-                  +91 98765 43210
                 </a>
               </li>
             </ul>

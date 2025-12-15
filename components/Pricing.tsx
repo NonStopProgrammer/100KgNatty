@@ -31,6 +31,7 @@ export const Pricing: React.FC = () => {
                 <ListItem text="Video Exercise Library" />
                 <ListItem text="Indian Veg/Non-Veg Diets" />
                 <ListItem text="Community Support" />
+                <ListItem text="Progress Tracking Tools" />
               </ul>
               <a href="#contact" className="block w-full py-4 text-center border-2 border-white/10 text-white font-bold italic uppercase hover:border-lime-500 hover:text-lime-400 transition-all skew-x-[-6deg] group-hover:shadow-[0_0_15px_rgba(132,204,22,0.3)]">
                 <span className="block skew-x-[6deg]">Get Started</span>
@@ -56,7 +57,7 @@ export const Pricing: React.FC = () => {
               </ul>
               <a href="#contact" className="block w-full py-4 text-center bg-lime-500 text-black font-black italic uppercase hover:bg-lime-400 hover:scale-105 transition-all skew-x-[-6deg] shadow-lg relative overflow-hidden group">
                 <div className="absolute inset-0 bg-white/40 transform -translate-x-full group-hover:translate-x-full transition-transform duration-700 skew-x-12"></div>
-                <span className="block skew-x-[6deg]">Apply Now</span>
+                <span className="block skew-x-[6deg]">Get Started</span>
               </a>
             </div>
           </Reveal>
@@ -75,7 +76,7 @@ export const Pricing: React.FC = () => {
                 <ListItem text="Supplement Protocols" />
               </ul>
               <a href="#contact" className="block w-full py-4 text-center border-2 border-white/10 text-white font-bold italic uppercase hover:border-lime-500 hover:text-lime-400 transition-all skew-x-[-6deg] group-hover:shadow-[0_0_15px_rgba(132,204,22,0.3)]">
-                <span className="block skew-x-[6deg]">Inquire</span>
+                <span className="block skew-x-[6deg]">Get Started</span>
               </a>
             </div>
           </Reveal>
