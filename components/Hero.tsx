@@ -47,12 +47,11 @@ export const Hero: React.FC = () => {
       {slides.map((slide, index) => (
         <div
           key={index}
-          className={`absolute inset-0 w-full h-full transition-all duration-1000 ease-in-out transform ${
-            index === activeSlide ? 'opacity-100 scale-100 z-10' : 'opacity-0 scale-105 z-0'
-          }`}
+          className={`absolute inset-0 w-full h-full transition-all duration-1000 ease-in-out transform ${index === activeSlide ? 'opacity-100 scale-100 z-10' : 'opacity-0 scale-105 z-0'
+            }`}
         >
           {/* Background Image */}
-          <div 
+          <div
             className="absolute inset-0 bg-cover bg-center"
             style={{ backgroundImage: `url('${slide.image}')` }}
           />
@@ -70,23 +69,23 @@ export const Hero: React.FC = () => {
                   </span>
                 </div>
               </Reveal>
-              
+
               <div className="overflow-hidden pb-4">
                 <h1 className={`font-sport font-black italic text-6xl sm:text-8xl lg:text-9xl leading-none text-white mb-6 uppercase tracking-tighter drop-shadow-lg transition-all duration-700 delay-200 transform ${index === activeSlide ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'}`}>
-                  {slide.title1} <br /> 
+                  {slide.title1} <br />
                   <span className={`text-transparent bg-clip-text bg-gradient-to-r from-lime-400 to-emerald-600 animate-shine bg-[length:200%_100%]`}>{slide.title2}</span>
                 </h1>
               </div>
-              
+
               <div className={`transition-all duration-700 delay-300 ${index === activeSlide ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-                 <p className="text-neutral-300 text-lg sm:text-xl font-medium max-w-lg mb-8 leading-relaxed">
+                <p className="text-neutral-300 text-lg sm:text-xl font-medium max-w-lg mb-8 leading-relaxed">
                   {slide.subtitle}
                 </p>
               </div>
-              
+
               <div className={`flex flex-wrap gap-4 transition-all duration-700 delay-500 ${index === activeSlide ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-                <button 
-                  onClick={() => handleScroll('programs')} 
+                <button
+                  onClick={() => handleScroll('programs')}
                   className="cursor-pointer group relative px-8 py-4 bg-lime-500 hover:bg-lime-400 text-black font-black uppercase italic tracking-wider skew-x-[-12deg] transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(132,204,22,0.5)] overflow-hidden"
                 >
                   <div className="absolute inset-0 bg-white/40 w-full h-full transform skew-x-12 -translate-x-full group-hover:animate-shine"></div>
@@ -94,11 +93,11 @@ export const Hero: React.FC = () => {
                     Start Training <ArrowRight className="w-5 h-5 stroke-[2.5] group-hover:translate-x-1 transition-transform" />
                   </span>
                 </button>
-                <button 
-                  onClick={() => handleScroll('about')} 
+                <button
+                  onClick={() => handleScroll('about')}
                   className="cursor-pointer group relative px-8 py-4 bg-transparent border-2 border-white/20 hover:border-lime-400 hover:bg-white/5 text-white font-bold uppercase italic tracking-wider skew-x-[-12deg] transition-all overflow-hidden"
                 >
-                   <div className="absolute inset-0 bg-white/10 w-full h-full transform translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                  <div className="absolute inset-0 bg-white/10 w-full h-full transform translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
                   <span className="block skew-x-[12deg] relative z-10">About Coach</span>
                 </button>
               </div>
@@ -109,6 +108,12 @@ export const Hero: React.FC = () => {
 
       {/* Decorative */}
       <div className="absolute bottom-0 w-full h-32 bg-gradient-to-t from-black to-transparent z-20"></div>
+
+      {/* Scroll Indicator */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2 animate-bounce">
+        <span className="text-neutral-400 text-xs uppercase tracking-widest font-medium">Scroll</span>
+        <ChevronRight className="w-5 h-5 text-lime-500 rotate-90" />
+      </div>
     </div>
   );
 };
