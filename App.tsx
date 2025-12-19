@@ -10,10 +10,13 @@ import { Footer } from './components/Footer';
 import { ProgramDetails } from './components/ProgramDetails';
 import { PrivacyPolicy } from './components/PrivacyPolicy';
 import { TermsOfService } from './components/TermsOfService';
+import { Blogs } from './components/Blogs';
+import { BlogDetail } from './components/BlogDetail';
 
 const App: React.FC = () => {
-  const [currentView, setCurrentView] = useState<'home' | 'program' | 'privacy' | 'terms'>('home');
+  const [currentView, setCurrentView] = useState<'home' | 'program' | 'privacy' | 'terms' | 'blogs' | 'blog-detail'>('home');
   const [selectedProgramId, setSelectedProgramId] = useState<string | null>(null);
+  const [selectedBlogId, setSelectedBlogId] = useState<string | null>(null);
 
   const handleProgramSelect = (id: string) => {
     setSelectedProgramId(id);
@@ -21,9 +24,16 @@ const App: React.FC = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleBlogSelect = (id: string) => {
+    setSelectedBlogId(id);
+    setCurrentView('blog-detail');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const handleBackToHome = (targetSectionId?: string) => {
     setCurrentView('home');
     setSelectedProgramId(null);
+    setSelectedBlogId(null);
 
     // If a target section is provided, scroll to it after the view renders
     if (targetSectionId) {
@@ -44,6 +54,12 @@ const App: React.FC = () => {
     }
   };
 
+  const handleBackToBlogs = () => {
+    setCurrentView('blogs');
+    setSelectedBlogId(null);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   // Handle footer link clicks
   React.useEffect(() => {
     const handleLinkClick = (e: MouseEvent) => {
@@ -55,6 +71,10 @@ const App: React.FC = () => {
       } else if (target.href?.includes('/terms-of-service')) {
         e.preventDefault();
         setCurrentView('terms');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (target.href?.includes('/blog')) {
+        e.preventDefault();
+        setCurrentView('blogs');
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     };
@@ -94,6 +114,10 @@ const App: React.FC = () => {
           <PrivacyPolicy onBack={() => handleBackToHome()} />
         ) : currentView === 'terms' ? (
           <TermsOfService onBack={() => handleBackToHome()} />
+        ) : currentView === 'blogs' ? (
+          <Blogs onBack={() => handleBackToHome()} onSelectBlog={handleBlogSelect} />
+        ) : currentView === 'blog-detail' && selectedBlogId ? (
+          <BlogDetail blogId={selectedBlogId} onBack={handleBackToBlogs} />
         ) : null}
       </main>
       <Footer />

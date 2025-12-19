@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { Instagram, Youtube, MapPin, Mail } from 'lucide-react';
+import { Instagram, Youtube, MapPin, Mail, BookOpen } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   return (
@@ -56,12 +55,13 @@ export const Footer: React.FC = () => {
             </h4>
             <ul className="space-y-3">
               {[
-                { label: 'Home', href: '#home' },
-                { label: 'About', href: '#about' },
-                { label: 'Programs', href: '#programs' },
-                { label: 'Transformations', href: '#transformations' },
-                { label: 'Pricing', href: '#pricing' },
-                { label: 'Contact', href: '#contact' }
+                { label: 'Home', href: '#home', icon: null },
+                { label: 'About', href: '#about', icon: null },
+                { label: 'Programs', href: '#programs', icon: null },
+                { label: 'Transformations', href: '#transformations', icon: null },
+                { label: 'Pricing', href: '#pricing', icon: null },
+                { label: 'Blog', href: '/blog', icon: null },
+                { label: 'Contact', href: '#contact', icon: null }
               ].map((link) => (
                 <li key={link.href}>
                   <a
@@ -69,6 +69,7 @@ export const Footer: React.FC = () => {
                     className="text-neutral-400 hover:text-lime-400 transition-colors text-sm font-medium flex items-center gap-2 group"
                   >
                     <span className="w-0 group-hover:w-4 h-px bg-lime-500 transition-all duration-300"></span>
+                    {link.icon && <span className="text-lime-500">{link.icon}</span>}
                     {link.label}
                   </a>
                 </li>
