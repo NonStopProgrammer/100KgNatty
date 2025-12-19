@@ -5,6 +5,8 @@ import { Hero } from './components/Hero';
 import { About } from './components/About';
 import { Programs } from './components/Programs';
 import { Transformations } from './components/Transformations';
+
+import { FAQ } from './components/FAQ';
 import { Pricing } from './components/Pricing';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
@@ -13,9 +15,10 @@ import { PrivacyPolicy } from './components/PrivacyPolicy';
 import { TermsOfService } from './components/TermsOfService';
 import { Blogs } from './components/Blogs';
 import { BlogDetail } from './components/BlogDetail';
+import { ScrollProgressIndicator } from './components/ScrollProgressIndicator';
 
 const App: React.FC = () => {
-  const [currentView, setCurrentView] = useState<'home' | 'program' | 'privacy' | 'terms' | 'blogs' | 'blog-detail'>('home');
+  const [currentView, setCurrentView] = useState<'home' | 'program' | 'privacy' | 'terms' | 'blogs' | 'blog-detail' | 'faq'>('home');
   const [selectedProgramId, setSelectedProgramId] = useState<string | null>(null);
   const [selectedBlogId, setSelectedBlogId] = useState<string | null>(null);
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
@@ -80,6 +83,10 @@ const App: React.FC = () => {
         e.preventDefault();
         setCurrentView('blogs');
         window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (target.href?.includes('/faq')) {
+        e.preventDefault();
+        setCurrentView('faq');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     };
 
@@ -89,6 +96,9 @@ const App: React.FC = () => {
 
   return (
     <div className={`w-full min-h-screen transition-colors duration-500 ${theme === 'dark' ? 'bg-black text-neutral-200' : 'bg-white text-neutral-900'} overflow-x-hidden`}>
+      {/* Scroll Progress Indicator - Shows on home page only */}
+      {currentView === 'home' && <ScrollProgressIndicator theme={theme} />}
+
       <Navbar onNavigate={handleBackToHome} isHome={currentView === 'home'} theme={theme} onToggleTheme={toggleTheme} />
       <main>
         {currentView === 'home' ? (
@@ -105,6 +115,7 @@ const App: React.FC = () => {
             <section id="transformations">
               <Transformations theme={theme} />
             </section>
+
             <section id="pricing">
               <Pricing theme={theme} />
             </section>
@@ -122,6 +133,8 @@ const App: React.FC = () => {
           <Blogs onBack={() => handleBackToHome()} onSelectBlog={handleBlogSelect} theme={theme} />
         ) : currentView === 'blog-detail' && selectedBlogId ? (
           <BlogDetail blogId={selectedBlogId} onBack={handleBackToBlogs} theme={theme} />
+        ) : currentView === 'faq' ? (
+          <FAQ onBack={() => handleBackToHome()} theme={theme} />
         ) : null}
       </main>
       <Footer theme={theme} />

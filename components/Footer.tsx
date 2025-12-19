@@ -67,6 +67,7 @@ export const Footer: React.FC<FooterProps> = ({ theme }) => {
                 { label: 'Programs', href: '#programs', icon: null },
                 { label: 'Transformations', href: '#transformations', icon: null },
                 { label: 'Pricing', href: '#pricing', icon: null },
+                { label: 'FAQ', href: '/faq', icon: null },
                 { label: 'Blog', href: '/blog', icon: null },
                 { label: 'Contact', href: '#contact', icon: null }
               ].map((link) => (
