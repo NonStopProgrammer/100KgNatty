@@ -1,6 +1,6 @@
 
-import React, { useState, useRef } from 'react';
-import { Quote, Star, ChevronLeft, ChevronRight } from 'lucide-react';
+import React from 'react';
+import { Quote, Star } from 'lucide-react';
 import { Reveal } from './Reveal';
 
 interface TransformationsProps {
@@ -8,7 +8,6 @@ interface TransformationsProps {
 }
 
 export const Transformations: React.FC<TransformationsProps> = ({ theme }) => {
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const isDark = theme === 'dark';
 
   const transformations = [
@@ -58,19 +57,8 @@ export const Transformations: React.FC<TransformationsProps> = ({ theme }) => {
     }
   ];
 
-  const scroll = (direction: 'left' | 'right') => {
-    if (scrollContainerRef.current) {
-      const scrollAmount = 400;
-      const newScrollLeft = direction === 'left'
-        ? scrollContainerRef.current.scrollLeft - scrollAmount
-        : scrollContainerRef.current.scrollLeft + scrollAmount;
-
-      scrollContainerRef.current.scrollTo({
-        left: newScrollLeft,
-        behavior: 'smooth'
-      });
-    }
-  };
+  // Duplicate transformations for seamless infinite loop
+  const duplicatedTransformations = [...transformations, ...transformations];
 
   return (
     <section className={`py-24 ${isDark ? 'bg-black' : 'bg-white'} relative overflow-hidden transition-colors duration-500`}>
@@ -86,23 +74,20 @@ export const Transformations: React.FC<TransformationsProps> = ({ theme }) => {
           <p className={`${isDark ? 'text-neutral-400' : 'text-neutral-600'} text-center mb-16 text-lg`}>Real People. Real Results. Real Transformations.</p>
         </Reveal>
 
-        {/* Scroll Container with Navigation */}
-        <div className="relative">
-          {/* Left Scroll Button */}
-          <button
-            onClick={() => scroll('left')}
-            className={`absolute left-0 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full ${isDark ? 'bg-neutral-900/90' : 'bg-white/90 shadow-md'} backdrop-blur border-2 border-lime-500/30 hover:border-lime-500 ${isDark ? 'text-white' : 'text-neutral-900'} hover:bg-lime-500 hover:text-black transition-all flex items-center justify-center shadow-lg hover:shadow-lime-500/50 -translate-x-6 hover:scale-110`}
-          >
-            <ChevronLeft className="w-6 h-6" />
-          </button>
+        {/* Infinite Scroll Container */}
+        <div className="relative overflow-hidden">
+          {/* Gradient overlays for smooth edges */}
+          <div className={`absolute left-0 top-0 bottom-0 w-20 z-10 pointer-events-none ${isDark ? 'bg-gradient-to-r from-black to-transparent' : 'bg-gradient-to-r from-white to-transparent'}`}></div>
+          <div className={`absolute right-0 top-0 bottom-0 w-20 z-10 pointer-events-none ${isDark ? 'bg-gradient-to-l from-black to-transparent' : 'bg-gradient-to-l from-white to-transparent'}`}></div>
 
-          {/* Horizontal Scroll Container */}
+          {/* Marquee Animation Container */}
           <div
-            ref={scrollContainerRef}
-            className="flex gap-8 overflow-x-auto scroll-smooth pb-4 px-2 scrollbar-hide"
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            className="flex gap-8 pb-4 animate-marquee hover:pause-animation"
+            style={{
+              width: 'fit-content',
+            }}
           >
-            {transformations.map((transformation, idx) => (
+            {duplicatedTransformations.map((transformation, idx) => (
               <div key={idx} className="flex-shrink-0 w-[350px]">
                 <div className="group cursor-pointer h-full">
                   {/* Before/After Images */}
@@ -180,14 +165,6 @@ export const Transformations: React.FC<TransformationsProps> = ({ theme }) => {
               </div>
             ))}
           </div>
-
-          {/* Right Scroll Button */}
-          <button
-            onClick={() => scroll('right')}
-            className={`absolute right-0 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full ${isDark ? 'bg-neutral-900/90' : 'bg-white/90 shadow-md'} backdrop-blur border-2 border-lime-500/30 hover:border-lime-500 ${isDark ? 'text-white' : 'text-neutral-900'} hover:bg-lime-500 hover:text-black transition-all flex items-center justify-center shadow-lg hover:shadow-lime-500/50 translate-x-6 hover:scale-110`}
-          >
-            <ChevronRight className="w-6 h-6" />
-          </button>
         </div>
       </div>
     </section>
