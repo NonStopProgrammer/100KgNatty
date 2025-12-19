@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { ArrowLeft, Clock, User, Calendar, BookOpen, Search, Filter } from 'lucide-react';
 import { blogPosts } from '../data/blogData';
@@ -6,11 +7,13 @@ import { Reveal } from './Reveal';
 interface BlogsProps {
     onBack: () => void;
     onSelectBlog: (blogId: string) => void;
+    theme: 'dark' | 'light';
 }
 
-export const Blogs: React.FC<BlogsProps> = ({ onBack, onSelectBlog }) => {
+export const Blogs: React.FC<BlogsProps> = ({ onBack, onSelectBlog, theme }) => {
     const [selectedCategory, setSelectedCategory] = useState<string>('All');
     const [searchQuery, setSearchQuery] = useState('');
+    const isDark = theme === 'dark';
 
     const categories = ['All', 'Training Tips', 'Nutrition', 'Success Story', 'Science', 'Program Guide'];
 
@@ -22,22 +25,22 @@ export const Blogs: React.FC<BlogsProps> = ({ onBack, onSelectBlog }) => {
     });
 
     return (
-        <div className="min-h-screen bg-black">
+        <div className={`min-h-screen ${isDark ? 'bg-black' : 'bg-white'} transition-colors duration-500`}>
             {/* Hero Section */}
-            <div className="relative bg-gradient-to-b from-neutral-950 to-black border-b border-white/5 overflow-hidden">
+            <div className={`relative ${isDark ? 'bg-gradient-to-b from-neutral-950 to-black border-white/5' : 'bg-gradient-to-b from-neutral-50 to-white border-black/5'} border-b overflow-hidden`}>
                 {/* Background Pattern */}
-                <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:40px_40px] opacity-30"></div>
+                <div className={`absolute inset-0 ${isDark ? 'bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)]' : 'bg-[linear-gradient(rgba(0,0,0,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.02)_1px,transparent_1px)]'} bg-[size:40px_40px] opacity-30`}></div>
 
                 {/* Glow Effects */}
                 <div className="absolute top-0 left-1/4 w-96 h-96 bg-lime-500/10 rounded-full blur-[120px]"></div>
                 <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-green-500/10 rounded-full blur-[120px]"></div>
 
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10 text-left">
                     {/* Back Button */}
                     <Reveal>
                         <button
                             onClick={onBack}
-                            className="group mb-8 flex items-center gap-2 text-neutral-400 hover:text-lime-400 transition-colors"
+                            className={`group mb-8 flex items-center gap-2 ${isDark ? 'text-neutral-400 hover:text-lime-400' : 'text-neutral-600 hover:text-lime-600'} transition-colors`}
                         >
                             <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
                             <span className="font-medium">Back to Home</span>
@@ -52,10 +55,10 @@ export const Blogs: React.FC<BlogsProps> = ({ onBack, onSelectBlog }) => {
                                     <span className="block skew-x-12">Knowledge Base</span>
                                 </span>
                             </div>
-                            <h1 className="font-sport font-black italic text-5xl sm:text-7xl uppercase tracking-tighter text-white mb-4">
+                            <h1 className={`font-sport font-black italic text-5xl sm:text-7xl uppercase tracking-tighter ${isDark ? 'text-white' : 'text-neutral-900'} mb-4`}>
                                 The <span className="text-transparent bg-clip-text bg-gradient-to-r from-lime-400 to-green-600 animate-shine bg-[length:200%_auto]">Iron</span> Blog
                             </h1>
-                            <p className="text-neutral-400 text-lg max-w-2xl">
+                            <p className={`${isDark ? 'text-neutral-400' : 'text-neutral-600'} text-lg max-w-2xl`}>
                                 Science-backed training tips, nutrition guides, and success stories to fuel your fitness journey.
                             </p>
                         </div>
@@ -72,7 +75,7 @@ export const Blogs: React.FC<BlogsProps> = ({ onBack, onSelectBlog }) => {
                                     placeholder="Search articles..."
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
-                                    className="w-full bg-neutral-900/50 border border-white/10 rounded-lg pl-12 pr-4 py-3 text-white placeholder:text-neutral-500 focus:outline-none focus:border-lime-500/50 transition-colors"
+                                    className={`w-full ${isDark ? 'bg-neutral-900/50 border-white/10 text-white' : 'bg-neutral-100 border-black/10 text-neutral-900'} border rounded-lg pl-12 pr-4 py-3 placeholder:text-neutral-500 focus:outline-none focus:border-lime-500/50 transition-colors`}
                                 />
                             </div>
 
@@ -82,7 +85,7 @@ export const Blogs: React.FC<BlogsProps> = ({ onBack, onSelectBlog }) => {
                                 <select
                                     value={selectedCategory}
                                     onChange={(e) => setSelectedCategory(e.target.value)}
-                                    className="appearance-none bg-neutral-900/50 border border-white/10 rounded-lg pl-12 pr-10 py-3 text-white focus:outline-none focus:border-lime-500/50 transition-colors cursor-pointer"
+                                    className={`appearance-none ${isDark ? 'bg-neutral-900/50 border-white/10 text-white' : 'bg-neutral-100 border-black/10 text-neutral-900'} border rounded-lg pl-12 pr-10 py-3 focus:outline-none focus:border-lime-500/50 transition-colors cursor-pointer`}
                                 >
                                     {categories.map(cat => (
                                         <option key={cat} value={cat}>{cat}</option>
@@ -100,8 +103,8 @@ export const Blogs: React.FC<BlogsProps> = ({ onBack, onSelectBlog }) => {
                                     key={category}
                                     onClick={() => setSelectedCategory(category)}
                                     className={`px-4 py-2 rounded-full text-sm font-bold uppercase tracking-wider transition-all duration-300 ${selectedCategory === category
-                                            ? 'bg-lime-500 text-black scale-105'
-                                            : 'bg-neutral-900/50 text-neutral-400 hover:bg-neutral-800 hover:text-white border border-white/10'
+                                            ? 'bg-lime-500 text-black scale-105 shadow-md'
+                                            : `${isDark ? 'bg-neutral-900/50 text-neutral-400 border-white/10 hover:bg-neutral-800' : 'bg-neutral-100 text-neutral-600 border-black/10 hover:bg-neutral-200'} hover:text-current border`
                                         }`}
                                     style={{ animationDelay: `${index * 50}ms` }}
                                 >
@@ -117,7 +120,7 @@ export const Blogs: React.FC<BlogsProps> = ({ onBack, onSelectBlog }) => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
                 {filteredBlogs.length === 0 ? (
                     <div className="text-center py-20">
-                        <BookOpen className="w-16 h-16 text-neutral-700 mx-auto mb-4" />
+                        <BookOpen className={`w-16 h-16 ${isDark ? 'text-neutral-800' : 'text-neutral-200'} mx-auto mb-4`} />
                         <p className="text-neutral-500 text-lg">No articles found. Try a different search or category.</p>
                     </div>
                 ) : (
@@ -126,7 +129,7 @@ export const Blogs: React.FC<BlogsProps> = ({ onBack, onSelectBlog }) => {
                             <Reveal key={blog.id} delay={index * 0.1} width="100%">
                                 <article
                                     onClick={() => onSelectBlog(blog.id)}
-                                    className="group cursor-pointer bg-neutral-900/30 border border-white/5 rounded-lg overflow-hidden hover:border-lime-500/50 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_0_30px_rgba(132,204,22,0.2)]"
+                                    className={`group cursor-pointer ${isDark ? 'bg-neutral-900/30 border-white/5' : 'bg-white border-black/10 shadow-sm'} border rounded-lg overflow-hidden hover:border-lime-500/50 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_0_30px_rgba(132,204,22,0.2)] text-left`}
                                 >
                                     {/* Image */}
                                     <div className="relative h-56 overflow-hidden">
@@ -135,7 +138,7 @@ export const Blogs: React.FC<BlogsProps> = ({ onBack, onSelectBlog }) => {
                                             alt={blog.title}
                                             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                         />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+                                        <div className={`absolute inset-0 bg-gradient-to-t ${isDark ? 'from-black via-black/40' : 'from-black/60 via-transparent'} to-transparent`}></div>
 
                                         {/* Category Badge */}
                                         <div className="absolute top-4 left-4">
@@ -167,12 +170,12 @@ export const Blogs: React.FC<BlogsProps> = ({ onBack, onSelectBlog }) => {
                                         </div>
 
                                         {/* Title */}
-                                        <h3 className="font-sport font-bold italic text-xl text-white mb-3 group-hover:text-lime-400 transition-colors line-clamp-2">
+                                        <h3 className={`font-sport font-bold italic text-xl ${isDark ? 'text-white' : 'text-neutral-900'} mb-3 group-hover:text-lime-500 transition-colors line-clamp-2`}>
                                             {blog.title}
                                         </h3>
 
                                         {/* Excerpt */}
-                                        <p className="text-neutral-400 text-sm leading-relaxed line-clamp-3 mb-4">
+                                        <p className={`${isDark ? 'text-neutral-400' : 'text-neutral-600'} text-sm leading-relaxed line-clamp-3 mb-4`}>
                                             {blog.excerpt}
                                         </p>
 
@@ -190,14 +193,14 @@ export const Blogs: React.FC<BlogsProps> = ({ onBack, onSelectBlog }) => {
             </div>
 
             {/* CTA Section */}
-            <div className="border-t border-white/5 bg-gradient-to-b from-black to-neutral-950">
+            <div className={`border-t ${isDark ? 'border-white/5 bg-gradient-to-b from-black to-neutral-950' : 'border-black/5 bg-gradient-to-b from-white to-neutral-50'}`}>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
                     <Reveal>
                         <div className="text-center">
-                            <h2 className="font-sport font-black italic text-4xl sm:text-5xl uppercase tracking-tighter text-white mb-4">
+                            <h2 className={`font-sport font-black italic text-4xl sm:text-5xl uppercase tracking-tighter ${isDark ? 'text-white' : 'text-neutral-900'} mb-4`}>
                                 Ready to <span className="text-transparent bg-clip-text bg-gradient-to-r from-lime-400 to-green-600">Transform?</span>
                             </h2>
-                            <p className="text-neutral-400 text-lg mb-8 max-w-2xl mx-auto">
+                            <p className={`${isDark ? 'text-neutral-400' : 'text-neutral-600'} text-lg mb-8 max-w-2xl mx-auto`}>
                                 Stop reading and start training. Apply for personalized coaching and get the results you deserve.
                             </p>
                             <button

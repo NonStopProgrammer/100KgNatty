@@ -1,9 +1,15 @@
+
 import React, { useState, useRef } from 'react';
 import { Quote, Star, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Reveal } from './Reveal';
 
-export const Transformations: React.FC = () => {
+interface TransformationsProps {
+  theme: 'dark' | 'light';
+}
+
+export const Transformations: React.FC<TransformationsProps> = ({ theme }) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const isDark = theme === 'dark';
 
   const transformations = [
     {
@@ -67,17 +73,17 @@ export const Transformations: React.FC = () => {
   };
 
   return (
-    <section className="py-24 bg-black relative overflow-hidden">
+    <section className={`py-24 ${isDark ? 'bg-black' : 'bg-white'} relative overflow-hidden transition-colors duration-500`}>
       {/* Animated background */}
-      <div className="absolute top-0 left-0 w-96 h-96 bg-lime-500/5 rounded-full blur-3xl animate-pulse-slow"></div>
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-lime-500/5 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '2s' }}></div>
+      <div className={`absolute top-0 left-0 w-96 h-96 ${isDark ? 'bg-lime-500/5' : 'bg-lime-500/10'} rounded-full blur-3xl animate-pulse-slow`}></div>
+      <div className={`absolute bottom-0 right-0 w-96 h-96 ${isDark ? 'bg-lime-500/5' : 'bg-lime-500/10'} rounded-full blur-3xl animate-pulse-slow`} style={{ animationDelay: '2s' }}></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <Reveal>
-          <h2 className="font-sport font-black italic text-4xl sm:text-5xl uppercase tracking-tighter text-white mb-4 text-center">
+          <h2 className={`font-sport font-black italic text-4xl sm:text-5xl uppercase tracking-tighter ${isDark ? 'text-white' : 'text-neutral-900'} mb-4 text-center`}>
             Hall of <span className="text-lime-500 animate-pulse">Fame</span>
           </h2>
-          <p className="text-neutral-400 text-center mb-16 text-lg">Real People. Real Results. Real Transformations.</p>
+          <p className={`${isDark ? 'text-neutral-400' : 'text-neutral-600'} text-center mb-16 text-lg`}>Real People. Real Results. Real Transformations.</p>
         </Reveal>
 
         {/* Scroll Container with Navigation */}
@@ -85,7 +91,7 @@ export const Transformations: React.FC = () => {
           {/* Left Scroll Button */}
           <button
             onClick={() => scroll('left')}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-neutral-900/90 backdrop-blur border-2 border-lime-500/30 hover:border-lime-500 text-white hover:bg-lime-500 hover:text-black transition-all flex items-center justify-center shadow-lg hover:shadow-lime-500/50 -translate-x-6 hover:scale-110"
+            className={`absolute left-0 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full ${isDark ? 'bg-neutral-900/90' : 'bg-white/90 shadow-md'} backdrop-blur border-2 border-lime-500/30 hover:border-lime-500 ${isDark ? 'text-white' : 'text-neutral-900'} hover:bg-lime-500 hover:text-black transition-all flex items-center justify-center shadow-lg hover:shadow-lime-500/50 -translate-x-6 hover:scale-110`}
           >
             <ChevronLeft className="w-6 h-6" />
           </button>
@@ -100,7 +106,7 @@ export const Transformations: React.FC = () => {
               <div key={idx} className="flex-shrink-0 w-[350px]">
                 <div className="group cursor-pointer h-full">
                   {/* Before/After Images */}
-                  <div className="relative aspect-[3/4] overflow-hidden rounded-xl border-2 border-neutral-800 mb-4 group-hover:border-lime-500 transition-all duration-300">
+                  <div className={`relative aspect-[3/4] overflow-hidden rounded-xl border-2 ${isDark ? 'border-neutral-800' : 'border-neutral-200'} mb-4 group-hover:border-lime-500 transition-all duration-300`}>
                     {/* Before Image */}
                     <div className="absolute inset-0">
                       <img
@@ -108,8 +114,8 @@ export const Transformations: React.FC = () => {
                         alt={`${transformation.name} Before`}
                         className="w-full h-full object-cover object-top grayscale group-hover:grayscale-0 transition-all duration-500"
                       />
-                      <div className="absolute top-3 left-3 bg-neutral-900/90 backdrop-blur-sm px-3 py-1 rounded-md">
-                        <span className="text-white text-xs font-bold uppercase">Before</span>
+                      <div className={`absolute top-3 left-3 ${isDark ? 'bg-neutral-900/90' : 'bg-white/90 shadow-sm'} backdrop-blur-sm px-3 py-1 rounded-md`}>
+                        <span className={`${isDark ? 'text-white' : 'text-neutral-900'} text-xs font-bold uppercase`}>Before</span>
                       </div>
                     </div>
 
@@ -126,15 +132,15 @@ export const Transformations: React.FC = () => {
                     </div>
 
                     {/* Stats Overlay */}
-                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/90 to-transparent p-4">
+                    <div className={`absolute bottom-0 left-0 right-0 ${isDark ? 'bg-gradient-to-t from-black via-black/90' : 'bg-gradient-to-t from-black/80 via-black/40'} to-transparent p-4`}>
                       <div className="flex justify-between items-end text-sm">
                         <div>
-                          <p className="text-neutral-400 text-xs uppercase">Before</p>
+                          <p className="text-neutral-300 text-xs uppercase">Before</p>
                           <p className="text-white font-bold font-sport italic">{transformation.stats.before}</p>
                         </div>
                         <div className="text-lime-500 text-xl">→</div>
                         <div className="text-right">
-                          <p className="text-neutral-400 text-xs uppercase">After</p>
+                          <p className="text-neutral-300 text-xs uppercase">After</p>
                           <p className="text-lime-500 font-bold font-sport italic">{transformation.stats.after}</p>
                         </div>
                       </div>
@@ -142,11 +148,11 @@ export const Transformations: React.FC = () => {
                   </div>
 
                   {/* Details Card */}
-                  <div className="bg-neutral-900/50 backdrop-blur border border-neutral-800 rounded-xl p-5 group-hover:bg-neutral-900 group-hover:border-lime-500/30 transition-all duration-300">
+                  <div className={`${isDark ? 'bg-neutral-900/50 border-neutral-800 hover:bg-neutral-900' : 'bg-neutral-50 border-neutral-200 hover:bg-neutral-100 shadow-sm'} backdrop-blur border rounded-xl p-5 group-hover:border-lime-500/30 transition-all duration-300`}>
                     {/* Header */}
                     <div className="flex items-start justify-between mb-3">
-                      <div>
-                        <h3 className="font-sport font-black italic text-xl text-white uppercase mb-1">{transformation.name}</h3>
+                      <div className="text-left">
+                        <h3 className={`font-sport font-black italic text-xl ${isDark ? 'text-white' : 'text-neutral-900'} uppercase mb-1`}>{transformation.name}</h3>
                         <div className="flex items-center gap-1 mb-2">
                           {[...Array(transformation.rating)].map((_, i) => (
                             <Star key={i} className="w-3 h-3 fill-lime-500 text-lime-500" />
@@ -155,19 +161,19 @@ export const Transformations: React.FC = () => {
                       </div>
                       <div className="text-right">
                         <p className="text-lime-500 font-bold text-sm font-sport italic">{transformation.result}</p>
-                        <p className="text-neutral-500 text-xs">{transformation.duration}</p>
+                        <p className={`${isDark ? 'text-neutral-500' : 'text-neutral-600'} text-xs`}>{transformation.duration}</p>
                       </div>
                     </div>
 
                     {/* Program Badge */}
-                    <div className="inline-block bg-lime-500/10 border border-lime-500/30 px-2 py-1 rounded-md mb-3">
-                      <span className="text-lime-400 text-xs font-bold uppercase">{transformation.program}</span>
+                    <div className={`inline-block ${isDark ? 'bg-lime-500/10 border-lime-500/30' : 'bg-lime-500/5 border-lime-500/20'} border px-2 py-1 rounded-md mb-3`}>
+                      <span className="text-lime-600 text-xs font-bold uppercase">{transformation.program}</span>
                     </div>
 
                     {/* Quote */}
-                    <div className="flex items-start gap-2">
+                    <div className="flex items-start gap-2 text-left">
                       <Quote className="w-4 h-4 text-lime-500 flex-shrink-0 mt-0.5" />
-                      <p className="text-neutral-300 text-sm italic leading-relaxed line-clamp-3">"{transformation.quote}"</p>
+                      <p className={`${isDark ? 'text-neutral-300' : 'text-neutral-700'} text-sm italic leading-relaxed line-clamp-3`}>"{transformation.quote}"</p>
                     </div>
                   </div>
                 </div>
@@ -178,7 +184,7 @@ export const Transformations: React.FC = () => {
           {/* Right Scroll Button */}
           <button
             onClick={() => scroll('right')}
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-neutral-900/90 backdrop-blur border-2 border-lime-500/30 hover:border-lime-500 text-white hover:bg-lime-500 hover:text-black transition-all flex items-center justify-center shadow-lg hover:shadow-lime-500/50 translate-x-6 hover:scale-110"
+            className={`absolute right-0 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full ${isDark ? 'bg-neutral-900/90' : 'bg-white/90 shadow-md'} backdrop-blur border-2 border-lime-500/30 hover:border-lime-500 ${isDark ? 'text-white' : 'text-neutral-900'} hover:bg-lime-500 hover:text-black transition-all flex items-center justify-center shadow-lg hover:shadow-lime-500/50 translate-x-6 hover:scale-110`}
           >
             <ChevronRight className="w-6 h-6" />
           </button>

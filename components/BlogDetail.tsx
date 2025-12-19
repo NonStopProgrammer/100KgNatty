@@ -1,22 +1,25 @@
+
 import React from 'react';
-import { ArrowLeft, Clock, User, Calendar, Share2, BookmarkPlus } from 'lucide-react';
-import { blogPosts, BlogPost } from '../data/blogData';
+import { ArrowLeft, Clock, User, Calendar } from 'lucide-react';
+import { blogPosts } from '../data/blogData';
 import { Reveal } from './Reveal';
 
 interface BlogDetailProps {
     blogId: string;
     onBack: () => void;
+    theme: 'dark' | 'light';
 }
 
-export const BlogDetail: React.FC<BlogDetailProps> = ({ blogId, onBack }) => {
+export const BlogDetail: React.FC<BlogDetailProps> = ({ blogId, onBack, theme }) => {
     const blog = blogPosts.find(b => b.id === blogId);
+    const isDark = theme === 'dark';
 
     if (!blog) {
         return (
-            <div className="min-h-screen bg-black flex items-center justify-center">
+            <div className={`min-h-screen ${isDark ? 'bg-black' : 'bg-white'} flex items-center justify-center`}>
                 <div className="text-center">
-                    <h2 className="text-white text-2xl font-bold mb-4">Blog not found</h2>
-                    <button onClick={onBack} className="text-lime-400 hover:text-lime-300">
+                    <h2 className={`${isDark ? 'text-white' : 'text-neutral-900'} text-2xl font-bold mb-4 text-center`}>Blog not found</h2>
+                    <button onClick={onBack} className="text-lime-500 hover:text-lime-600">
                         Go back
                     </button>
                 </div>
@@ -25,7 +28,7 @@ export const BlogDetail: React.FC<BlogDetailProps> = ({ blogId, onBack }) => {
     }
 
     return (
-        <div className="min-h-screen bg-black">
+        <div className={`min-h-screen ${isDark ? 'bg-black' : 'bg-white'} transition-colors duration-500`}>
             {/* Hero Image Section */}
             <div className="relative h-[60vh] overflow-hidden">
                 <img
@@ -33,14 +36,14 @@ export const BlogDetail: React.FC<BlogDetailProps> = ({ blogId, onBack }) => {
                     alt={blog.title}
                     className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/30"></div>
+                <div className={`absolute inset-0 bg-gradient-to-t ${isDark ? 'from-black via-black/60 to-black/30' : 'from-black/80 via-black/40 to-transparent'}`}></div>
 
                 {/* Back Button */}
                 <div className="absolute top-8 left-4 sm:left-8 z-20">
                     <Reveal>
                         <button
                             onClick={onBack}
-                            className="group flex items-center gap-2 bg-black/50 backdrop-blur-md border border-white/10 px-4 py-2 rounded-lg text-white hover:bg-black/70 hover:border-lime-500/50 transition-all"
+                            className={`group flex items-center gap-2 bg-black/50 backdrop-blur-md border border-white/10 px-4 py-2 rounded-lg text-white hover:bg-black/70 hover:border-lime-500/50 transition-all`}
                         >
                             <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
                             <span className="font-medium">Back</span>
@@ -49,7 +52,7 @@ export const BlogDetail: React.FC<BlogDetailProps> = ({ blogId, onBack }) => {
                 </div>
 
                 {/* Title Overlay */}
-                <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-8">
+                <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-8 text-left">
                     <div className="max-w-4xl mx-auto">
                         <Reveal delay={0.1}>
                             <div className="mb-4">
@@ -89,11 +92,11 @@ export const BlogDetail: React.FC<BlogDetailProps> = ({ blogId, onBack }) => {
             </div>
 
             {/* Article Content */}
-            <article className="max-w-4xl mx-auto px-4 sm:px-8 py-16">
+            <article className="max-w-4xl mx-auto px-4 sm:px-8 py-16 text-left">
                 {/* Introduction */}
                 <Reveal delay={0.1}>
                     <div className="mb-12">
-                        <p className="text-neutral-300 text-lg leading-relaxed first-letter:text-6xl first-letter:font-sport first-letter:font-black first-letter:italic first-letter:text-lime-500 first-letter:float-left first-letter:mr-3 first-letter:leading-none">
+                        <p className={`${isDark ? 'text-neutral-300' : 'text-neutral-700'} text-lg leading-relaxed first-letter:text-6xl first-letter:font-sport first-letter:font-black first-letter:italic first-letter:text-lime-500 first-letter:float-left first-letter:mr-3 first-letter:leading-none`}>
                             {blog.content.intro}
                         </p>
                     </div>
@@ -102,7 +105,7 @@ export const BlogDetail: React.FC<BlogDetailProps> = ({ blogId, onBack }) => {
                 {/* YouTube Video if available */}
                 {blog.youtubeVideoId && (
                     <Reveal delay={0.2}>
-                        <div className="mb-12 relative aspect-video rounded-lg overflow-hidden border border-white/10 group">
+                        <div className={`mb-12 relative aspect-video rounded-lg overflow-hidden border ${isDark ? 'border-white/10' : 'border-black/10'} group`}>
                             <iframe
                                 width="100%"
                                 height="100%"
@@ -125,11 +128,11 @@ export const BlogDetail: React.FC<BlogDetailProps> = ({ blogId, onBack }) => {
                             <div className="mb-6">
                                 <div className="flex items-center gap-3 mb-3">
                                     <span className="w-12 h-1 bg-lime-500 skew-x-[-12deg]"></span>
-                                    <h2 className="font-sport font-bold italic text-3xl text-white uppercase tracking-tight">
+                                    <h2 className={`font-sport font-bold italic text-3xl ${isDark ? 'text-white' : 'text-neutral-900'} uppercase tracking-tight`}>
                                         {section.heading}
                                     </h2>
                                 </div>
-                                <p className="text-neutral-300 text-lg leading-relaxed">
+                                <p className={`${isDark ? 'text-neutral-300' : 'text-neutral-700'} text-lg leading-relaxed`}>
                                     {section.content}
                                 </p>
                             </div>
@@ -138,17 +141,15 @@ export const BlogDetail: React.FC<BlogDetailProps> = ({ blogId, onBack }) => {
                             {section.points && section.points.length > 0 && (
                                 <ul className="space-y-4">
                                     {section.points.map((point, pointIndex) => {
-                                        // Check if point contains markdown bold (**text**)
                                         const parts = point.split(/(\*\*.*?\*\*)/g);
-
                                         return (
                                             <li key={pointIndex} className="flex items-start gap-4 group">
                                                 <span className="flex-shrink-0 w-2 h-2 bg-lime-500 rounded-full mt-2.5 group-hover:scale-150 transition-transform"></span>
-                                                <p className="text-neutral-400 leading-relaxed flex-1">
+                                                <p className={`${isDark ? 'text-neutral-400' : 'text-neutral-600'} leading-relaxed flex-1`}>
                                                     {parts.map((part, i) => {
                                                         if (part.startsWith('**') && part.endsWith('**')) {
                                                             return (
-                                                                <strong key={i} className="text-white font-bold">
+                                                                <strong key={i} className={`${isDark ? 'text-white' : 'text-neutral-900'} font-bold`}>
                                                                     {part.slice(2, -2)}
                                                                 </strong>
                                                             );
@@ -167,12 +168,12 @@ export const BlogDetail: React.FC<BlogDetailProps> = ({ blogId, onBack }) => {
 
                 {/* Conclusion */}
                 <Reveal delay={0.5}>
-                    <div className="mt-16 p-8 bg-gradient-to-br from-lime-500/10 to-green-500/5 border-l-4 border-lime-500 rounded-r-lg">
-                        <h3 className="font-sport font-bold italic text-2xl text-white uppercase mb-4 flex items-center gap-2">
+                    <div className={`mt-16 p-8 ${isDark ? 'bg-gradient-to-br from-lime-500/10 to-green-500/5 border-lime-500' : 'bg-lime-500/5 border-lime-500'} border-l-4 rounded-r-lg`}>
+                        <h3 className={`font-sport font-bold italic text-2xl ${isDark ? 'text-white' : 'text-neutral-900'} uppercase mb-4 flex items-center gap-2`}>
                             <span className="text-lime-500">→</span>
                             Key Takeaway
                         </h3>
-                        <p className="text-neutral-300 text-lg leading-relaxed">
+                        <p className={`${isDark ? 'text-neutral-300' : 'text-neutral-700'} text-lg leading-relaxed`}>
                             {blog.content.conclusion}
                         </p>
                     </div>
@@ -180,21 +181,21 @@ export const BlogDetail: React.FC<BlogDetailProps> = ({ blogId, onBack }) => {
 
                 {/* Author Bio */}
                 <Reveal delay={0.6}>
-                    <div className="mt-16 p-8 bg-neutral-900/30 border border-white/5 rounded-lg">
-                        <div className="flex items-start gap-6">
+                    <div className={`mt-16 p-8 ${isDark ? 'bg-neutral-900/30 border-white/5' : 'bg-neutral-50 border-black/5'} border rounded-lg`}>
+                        <div className="flex flex-col sm:flex-row items-start gap-6">
                             <div className="flex-shrink-0 w-20 h-20 bg-gradient-to-br from-lime-500 to-green-600 rounded-full flex items-center justify-center">
                                 <span className="font-sport font-black italic text-3xl text-black">A</span>
                             </div>
                             <div>
-                                <h4 className="font-sport font-bold italic text-2xl text-white mb-2">
+                                <h4 className={`font-sport font-bold italic text-2xl ${isDark ? 'text-white' : 'text-neutral-900'} mb-2`}>
                                     {blog.author}
                                 </h4>
-                                <p className="text-neutral-400 leading-relaxed mb-4">
+                                <p className={`${isDark ? 'text-neutral-400' : 'text-neutral-600'} leading-relaxed mb-4`}>
                                     NASM Certified Personal Trainer & CSCS. Mr. Tamilnadu & ICN Bodybuilding Nationals Champion.
                                     Specializing in natural bodybuilding, strength training, and evidence-based coaching for over 10 years.
                                 </p>
                                 <div className="flex gap-3">
-                                    <a href="https://www.instagram.com/trainwitharavindh" target="_blank" rel="noopener noreferrer" className="text-lime-500 hover:text-lime-400 text-sm font-medium transition-colors">
+                                    <a href="https://www.instagram.com/trainwitharavindh" target="_blank" rel="noopener noreferrer" className="text-lime-600 hover:text-lime-700 text-sm font-bold transition-colors">
                                         Follow on Instagram →
                                     </a>
                                 </div>

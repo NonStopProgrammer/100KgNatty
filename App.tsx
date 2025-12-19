@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { About } from './components/About';
@@ -17,6 +18,11 @@ const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<'home' | 'program' | 'privacy' | 'terms' | 'blogs' | 'blog-detail'>('home');
   const [selectedProgramId, setSelectedProgramId] = useState<string | null>(null);
   const [selectedBlogId, setSelectedBlogId] = useState<string | null>(null);
+  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+
+  const toggleTheme = () => {
+    setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+  };
 
   const handleProgramSelect = (id: string) => {
     setSelectedProgramId(id);
@@ -35,7 +41,6 @@ const App: React.FC = () => {
     setSelectedProgramId(null);
     setSelectedBlogId(null);
 
-    // If a target section is provided, scroll to it after the view renders
     if (targetSectionId) {
       setTimeout(() => {
         const element = document.getElementById(targetSectionId);
@@ -60,8 +65,7 @@ const App: React.FC = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Handle footer link clicks
-  React.useEffect(() => {
+  useEffect(() => {
     const handleLinkClick = (e: MouseEvent) => {
       const target = e.target as HTMLAnchorElement;
       if (target.href?.includes('/privacy-policy')) {
@@ -84,43 +88,43 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className="w-full min-h-screen bg-black overflow-x-hidden">
-      <Navbar onNavigate={handleBackToHome} isHome={currentView === 'home'} />
+    <div className={`w-full min-h-screen transition-colors duration-500 ${theme === 'dark' ? 'bg-black text-neutral-200' : 'bg-white text-neutral-900'} overflow-x-hidden`}>
+      <Navbar onNavigate={handleBackToHome} isHome={currentView === 'home'} theme={theme} onToggleTheme={toggleTheme} />
       <main>
         {currentView === 'home' ? (
           <>
             <section id="home">
-              <Hero />
+              <Hero theme={theme} />
             </section>
             <section id="about">
-              <About />
+              <About theme={theme} />
             </section>
             <section id="programs">
-              <Programs onSelectProgram={handleProgramSelect} />
+              <Programs onSelectProgram={handleProgramSelect} theme={theme} />
             </section>
             <section id="transformations">
-              <Transformations />
+              <Transformations theme={theme} />
             </section>
             <section id="pricing">
-              <Pricing />
+              <Pricing theme={theme} />
             </section>
             <section id="contact">
-              <Contact />
+              <Contact theme={theme} />
             </section>
           </>
         ) : currentView === 'program' && selectedProgramId ? (
-          <ProgramDetails programId={selectedProgramId} onBack={() => handleBackToHome()} />
+          <ProgramDetails programId={selectedProgramId} onBack={() => handleBackToHome()} theme={theme} />
         ) : currentView === 'privacy' ? (
-          <PrivacyPolicy onBack={() => handleBackToHome()} />
+          <PrivacyPolicy onBack={() => handleBackToHome()} theme={theme} />
         ) : currentView === 'terms' ? (
-          <TermsOfService onBack={() => handleBackToHome()} />
+          <TermsOfService onBack={() => handleBackToHome()} theme={theme} />
         ) : currentView === 'blogs' ? (
-          <Blogs onBack={() => handleBackToHome()} onSelectBlog={handleBlogSelect} />
+          <Blogs onBack={() => handleBackToHome()} onSelectBlog={handleBlogSelect} theme={theme} />
         ) : currentView === 'blog-detail' && selectedBlogId ? (
-          <BlogDetail blogId={selectedBlogId} onBack={handleBackToBlogs} />
+          <BlogDetail blogId={selectedBlogId} onBack={handleBackToBlogs} theme={theme} />
         ) : null}
       </main>
-      <Footer />
+      <Footer theme={theme} />
     </div>
   );
 };

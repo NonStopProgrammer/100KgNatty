@@ -1,9 +1,15 @@
+
 import React, { useState, useEffect } from 'react';
 import { ArrowRight, ChevronRight } from 'lucide-react';
 import { Reveal } from './Reveal';
 
-export const Hero: React.FC = () => {
+interface HeroProps {
+  theme: 'dark' | 'light';
+}
+
+export const Hero: React.FC<HeroProps> = ({ theme }) => {
   const [activeSlide, setActiveSlide] = useState(0);
+  const isDark = theme === 'dark';
 
   const slides = [
     {
@@ -43,7 +49,7 @@ export const Hero: React.FC = () => {
   };
 
   return (
-    <div className="relative h-[650px] sm:h-[800px] w-full bg-black overflow-hidden group">
+    <div className={`relative h-[650px] sm:h-[800px] w-full ${isDark ? 'bg-black' : 'bg-neutral-50'} overflow-hidden group`}>
       {slides.map((slide, index) => (
         <div
           key={index}
@@ -56,8 +62,8 @@ export const Hero: React.FC = () => {
             style={{ backgroundImage: `url('${slide.image}')` }}
           />
           {/* Overlays */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent"></div>
-          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-30 mix-blend-overlay"></div>
+          <div className={`absolute inset-0 bg-gradient-to-r ${isDark ? 'from-black via-black/80' : 'from-white via-white/70'} to-transparent`}></div>
+          <div className={`absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-30 mix-blend-overlay`}></div>
 
           {/* Content */}
           <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center z-20">
@@ -71,14 +77,14 @@ export const Hero: React.FC = () => {
               </Reveal>
 
               <div className="overflow-hidden pb-4">
-                <h1 className={`font-sport font-black italic text-6xl sm:text-8xl lg:text-9xl leading-none text-white mb-6 uppercase tracking-tighter drop-shadow-lg transition-all duration-700 delay-200 transform ${index === activeSlide ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'}`}>
+                <h1 className={`font-sport font-black italic text-6xl sm:text-8xl lg:text-9xl leading-none ${isDark ? 'text-white' : 'text-neutral-900'} mb-6 uppercase tracking-tighter drop-shadow-lg transition-all duration-700 delay-200 transform ${index === activeSlide ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'}`}>
                   {slide.title1} <br />
                   <span className={`text-transparent bg-clip-text bg-gradient-to-r from-lime-400 to-emerald-600 animate-shine bg-[length:200%_100%]`}>{slide.title2}</span>
                 </h1>
               </div>
 
               <div className={`transition-all duration-700 delay-300 ${index === activeSlide ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-                <p className="text-neutral-300 text-lg sm:text-xl font-medium max-w-lg mb-8 leading-relaxed">
+                <p className={`${isDark ? 'text-neutral-300' : 'text-neutral-700'} text-lg sm:text-xl font-medium max-w-lg mb-8 leading-relaxed`}>
                   {slide.subtitle}
                 </p>
               </div>
@@ -95,9 +101,9 @@ export const Hero: React.FC = () => {
                 </button>
                 <button
                   onClick={() => handleScroll('about')}
-                  className="cursor-pointer group relative px-8 py-4 bg-transparent border-2 border-white/20 hover:border-lime-400 hover:bg-white/5 text-white font-bold uppercase italic tracking-wider skew-x-[-12deg] transition-all overflow-hidden"
+                  className={`cursor-pointer group relative px-8 py-4 bg-transparent border-2 ${isDark ? 'border-white/20 text-white' : 'border-black/20 text-neutral-900'} hover:border-lime-500 hover:bg-lime-500/5 font-bold uppercase italic tracking-wider skew-x-[-12deg] transition-all overflow-hidden`}
                 >
-                  <div className="absolute inset-0 bg-white/10 w-full h-full transform translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                  <div className={`absolute inset-0 ${isDark ? 'bg-white/10' : 'bg-black/5'} w-full h-full transform translate-y-full group-hover:translate-y-0 transition-transform duration-300`}></div>
                   <span className="block skew-x-[12deg] relative z-10">About Coach</span>
                 </button>
               </div>
@@ -107,11 +113,11 @@ export const Hero: React.FC = () => {
       ))}
 
       {/* Decorative */}
-      <div className="absolute bottom-0 w-full h-32 bg-gradient-to-t from-black to-transparent z-20"></div>
+      <div className={`absolute bottom-0 w-full h-32 bg-gradient-to-t ${isDark ? 'from-black' : 'from-white'} to-transparent z-20`}></div>
 
       {/* Scroll Indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2 animate-bounce">
-        <span className="text-neutral-400 text-xs uppercase tracking-widest font-medium">Scroll</span>
+        <span className={`${isDark ? 'text-neutral-400' : 'text-neutral-500'} text-xs uppercase tracking-widest font-medium`}>Scroll</span>
         <ChevronRight className="w-5 h-5 text-lime-500 rotate-90" />
       </div>
     </div>

@@ -1,39 +1,45 @@
+
 import React from 'react';
 import { ArrowLeft } from 'lucide-react';
 
 interface PrivacyPolicyProps {
     onBack: () => void;
+    // Add missing theme property to fix TypeScript error in App.tsx
+    theme: 'dark' | 'light';
 }
 
-export const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({ onBack }) => {
+export const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({ onBack, theme }) => {
+    // Implement theme logic consistent with other components
+    const isDark = theme === 'dark';
+
     return (
-        <div className="min-h-screen bg-black text-white">
+        <div className={`min-h-screen ${isDark ? 'bg-black text-white' : 'bg-white text-neutral-900'} transition-colors duration-500`}>
             {/* Header */}
-            <div className="bg-neutral-900 border-b border-neutral-800">
+            <div className={`${isDark ? 'bg-neutral-900 border-neutral-800' : 'bg-neutral-50 border-neutral-200 shadow-sm'} border-b`}>
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                     <button
                         onClick={onBack}
-                        className="group flex items-center gap-2 text-neutral-400 hover:text-lime-500 transition-colors mb-6"
+                        className={`group flex items-center gap-2 ${isDark ? 'text-neutral-400' : 'text-neutral-600'} hover:text-lime-500 transition-colors mb-6`}
                     >
                         <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
                         Back to Home
                     </button>
-                    <h1 className="font-sport font-black italic text-4xl sm:text-5xl uppercase tracking-tighter">
+                    <h1 className={`font-sport font-black italic text-4xl sm:text-5xl uppercase tracking-tighter ${isDark ? 'text-white' : 'text-neutral-900'}`}>
                         Privacy <span className="text-lime-500">Policy</span>
                     </h1>
-                    <p className="text-neutral-400 mt-2">Last updated: December 15, 2025</p>
+                    <p className={`${isDark ? 'text-neutral-400' : 'text-neutral-500'} mt-2`}>Last updated: December 15, 2025</p>
                 </div>
             </div>
 
             {/* Content */}
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-                <div className="prose prose-invert max-w-none">
+                <div className="max-w-none text-left">
 
                     <section className="mb-8">
-                        <h2 className="font-sport font-bold italic text-2xl text-white uppercase mb-4 border-l-4 border-lime-500 pl-4">
+                        <h2 className={`font-sport font-bold italic text-2xl ${isDark ? 'text-white' : 'text-neutral-900'} uppercase mb-4 border-l-4 border-lime-500 pl-4`}>
                             1. Information We Collect
                         </h2>
-                        <div className="text-neutral-300 leading-relaxed space-y-4 ml-6">
+                        <div className={`${isDark ? 'text-neutral-300' : 'text-neutral-700'} leading-relaxed space-y-4 ml-6`}>
                             <p>
                                 We collect information that you provide directly to us when you:
                             </p>
@@ -50,10 +56,10 @@ export const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({ onBack }) => {
                     </section>
 
                     <section className="mb-8">
-                        <h2 className="font-sport font-bold italic text-2xl text-white uppercase mb-4 border-l-4 border-lime-500 pl-4">
+                        <h2 className={`font-sport font-bold italic text-2xl ${isDark ? 'text-white' : 'text-neutral-900'} uppercase mb-4 border-l-4 border-lime-500 pl-4`}>
                             2. How We Use Your Information
                         </h2>
-                        <div className="text-neutral-300 leading-relaxed space-y-4 ml-6">
+                        <div className={`${isDark ? 'text-neutral-300' : 'text-neutral-700'} leading-relaxed space-y-4 ml-6`}>
                             <p>We use the information we collect to:</p>
                             <ul className="list-disc list-inside space-y-2 ml-4">
                                 <li>Provide, maintain, and improve our training services</li>
@@ -67,10 +73,10 @@ export const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({ onBack }) => {
                     </section>
 
                     <section className="mb-8">
-                        <h2 className="font-sport font-bold italic text-2xl text-white uppercase mb-4 border-l-4 border-lime-500 pl-4">
+                        <h2 className={`font-sport font-bold italic text-2xl ${isDark ? 'text-white' : 'text-neutral-900'} uppercase mb-4 border-l-4 border-lime-500 pl-4`}>
                             3. Information Sharing and Disclosure
                         </h2>
-                        <div className="text-neutral-300 leading-relaxed space-y-4 ml-6">
+                        <div className={`${isDark ? 'text-neutral-300' : 'text-neutral-700'} leading-relaxed space-y-4 ml-6`}>
                             <p>
                                 We do not share, sell, or rent your personal information to third parties except in the following circumstances:
                             </p>
@@ -84,10 +90,10 @@ export const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({ onBack }) => {
                     </section>
 
                     <section className="mb-8">
-                        <h2 className="font-sport font-bold italic text-2xl text-white uppercase mb-4 border-l-4 border-lime-500 pl-4">
+                        <h2 className={`font-sport font-bold italic text-2xl ${isDark ? 'text-white' : 'text-neutral-900'} uppercase mb-4 border-l-4 border-lime-500 pl-4`}>
                             4. Data Security
                         </h2>
-                        <div className="text-neutral-300 leading-relaxed space-y-4 ml-6">
+                        <div className={`${isDark ? 'text-neutral-300' : 'text-neutral-700'} leading-relaxed space-y-4 ml-6`}>
                             <p>
                                 We take reasonable measures to protect your personal information from unauthorized access, use, or disclosure.
                                 However, no internet transmission is completely secure, and we cannot guarantee absolute security.
@@ -96,10 +102,10 @@ export const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({ onBack }) => {
                     </section>
 
                     <section className="mb-8">
-                        <h2 className="font-sport font-bold italic text-2xl text-white uppercase mb-4 border-l-4 border-lime-500 pl-4">
+                        <h2 className={`font-sport font-bold italic text-2xl ${isDark ? 'text-white' : 'text-neutral-900'} uppercase mb-4 border-l-4 border-lime-500 pl-4`}>
                             5. Your Rights
                         </h2>
-                        <div className="text-neutral-300 leading-relaxed space-y-4 ml-6">
+                        <div className={`${isDark ? 'text-neutral-300' : 'text-neutral-700'} leading-relaxed space-y-4 ml-6`}>
                             <p>You have the right to:</p>
                             <ul className="list-disc list-inside space-y-2 ml-4">
                                 <li>Access and receive a copy of your personal data</li>
@@ -112,10 +118,10 @@ export const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({ onBack }) => {
                     </section>
 
                     <section className="mb-8">
-                        <h2 className="font-sport font-bold italic text-2xl text-white uppercase mb-4 border-l-4 border-lime-500 pl-4">
+                        <h2 className={`font-sport font-bold italic text-2xl ${isDark ? 'text-white' : 'text-neutral-900'} uppercase mb-4 border-l-4 border-lime-500 pl-4`}>
                             6. Cookies and Tracking
                         </h2>
-                        <div className="text-neutral-300 leading-relaxed space-y-4 ml-6">
+                        <div className={`${isDark ? 'text-neutral-300' : 'text-neutral-700'} leading-relaxed space-y-4 ml-6`}>
                             <p>
                                 We use cookies and similar tracking technologies to track activity on our website and hold certain information.
                                 You can instruct your browser to refuse all cookies or to indicate when a cookie is being sent.
@@ -124,15 +130,15 @@ export const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({ onBack }) => {
                     </section>
 
                     <section className="mb-8">
-                        <h2 className="font-sport font-bold italic text-2xl text-white uppercase mb-4 border-l-4 border-lime-500 pl-4">
+                        <h2 className={`font-sport font-bold italic text-2xl ${isDark ? 'text-white' : 'text-neutral-900'} uppercase mb-4 border-l-4 border-lime-500 pl-4`}>
                             7. Contact Us
                         </h2>
-                        <div className="text-neutral-300 leading-relaxed space-y-4 ml-6">
+                        <div className={`${isDark ? 'text-neutral-300' : 'text-neutral-700'} leading-relaxed space-y-4 ml-6`}>
                             <p>
                                 If you have any questions about this Privacy Policy, please contact us at:
                             </p>
-                            <div className="bg-neutral-900 border border-neutral-800 p-4 rounded-lg mt-4">
-                                <p className="font-bold text-white">100KG NATTY</p>
+                            <div className={`${isDark ? 'bg-neutral-900 border-neutral-800' : 'bg-neutral-50 border-neutral-200 shadow-sm'} border p-4 rounded-lg mt-4`}>
+                                <p className={`font-bold ${isDark ? 'text-white' : 'text-neutral-900'}`}>100KG NATTY</p>
                                 <p>Email: <a href="mailto:coach@100kgnatty.com" className="text-lime-500 hover:text-lime-400">coach@100kgnatty.com</a></p>
                                 <p>Location: Navalur, Chennai, Tamilnadu</p>
                             </div>

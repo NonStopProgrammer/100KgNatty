@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { ArrowLeft, Check, Calendar, Clock, BarChart, Target, Zap } from 'lucide-react';
 import { Reveal } from './Reveal';
@@ -5,6 +6,7 @@ import { Reveal } from './Reveal';
 interface ProgramDetailsProps {
   programId: string;
   onBack: () => void;
+  theme: 'dark' | 'light';
 }
 
 const programsData: Record<string, any> = {
@@ -102,17 +104,18 @@ const programsData: Record<string, any> = {
   }
 };
 
-export const ProgramDetails: React.FC<ProgramDetailsProps> = ({ programId, onBack }) => {
+export const ProgramDetails: React.FC<ProgramDetailsProps> = ({ programId, onBack, theme }) => {
   const program = programsData[programId];
+  const isDark = theme === 'dark';
 
-  if (!program) return <div>Program not found</div>;
+  if (!program) return <div className="p-20 text-center">Program not found</div>;
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className={`min-h-screen ${isDark ? 'bg-black' : 'bg-white'} transition-colors duration-500`}>
       {/* Hero Header */}
       <div className="relative h-[60vh] w-full overflow-hidden animate-fade-in-up">
         <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url('${program.image}')` }} />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent" />
+        <div className={`absolute inset-0 bg-gradient-to-t ${isDark ? 'from-black via-black/80' : 'from-black/70 via-black/30'} to-transparent`} />
 
         <div className="absolute top-0 left-0 p-6 z-50">
           <button
@@ -126,7 +129,7 @@ export const ProgramDetails: React.FC<ProgramDetailsProps> = ({ programId, onBac
           </button>
         </div>
 
-        <div className="absolute bottom-0 left-0 w-full p-8 md:p-16">
+        <div className="absolute bottom-0 left-0 w-full p-8 md:p-16 text-left">
           <div className="max-w-7xl mx-auto">
             <Reveal>
               <span className="inline-block bg-lime-500 text-black text-xs font-black px-3 py-1 -skew-x-12 uppercase tracking-wider mb-4 animate-shine bg-[length:200%_auto]">
@@ -139,7 +142,7 @@ export const ProgramDetails: React.FC<ProgramDetailsProps> = ({ programId, onBac
               </h1>
             </Reveal>
             <Reveal delay={0.2}>
-              <p className="text-xl md:text-2xl text-neutral-300 font-medium italic">
+              <p className="text-xl md:text-2xl text-neutral-200 font-medium italic">
                 {program.subtitle}
               </p>
             </Reveal>
@@ -151,11 +154,11 @@ export const ProgramDetails: React.FC<ProgramDetailsProps> = ({ programId, onBac
         <div className="grid lg:grid-cols-3 gap-12">
 
           {/* Main Content */}
-          <div className="lg:col-span-2 space-y-12">
+          <div className="lg:col-span-2 space-y-12 text-left">
             <Reveal delay={0.3}>
               <div>
-                <h2 className="font-sport font-bold italic text-3xl text-white uppercase mb-6">Mission Brief</h2>
-                <p className="text-neutral-400 text-lg leading-relaxed border-l-4 border-lime-500 pl-6 hover:bg-white/5 transition-colors py-2 rounded-r">
+                <h2 className={`font-sport font-bold italic text-3xl ${isDark ? 'text-white' : 'text-neutral-900'} uppercase mb-6`}>Mission Brief</h2>
+                <p className={`${isDark ? 'text-neutral-400' : 'text-neutral-700'} text-lg leading-relaxed border-l-4 border-lime-500 pl-6 ${isDark ? 'hover:bg-white/5' : 'hover:bg-black/5'} transition-colors py-2 rounded-r`}>
                   {program.description}
                 </p>
               </div>
@@ -163,13 +166,13 @@ export const ProgramDetails: React.FC<ProgramDetailsProps> = ({ programId, onBac
 
             <Reveal delay={0.4}>
               <div>
-                <h2 className="font-sport font-bold italic text-3xl text-white uppercase mb-8">Phase Breakdown</h2>
+                <h2 className={`font-sport font-bold italic text-3xl ${isDark ? 'text-white' : 'text-neutral-900'} uppercase mb-8`}>Phase Breakdown</h2>
                 <div className="space-y-6">
                   {program.phases.map((phase: any, index: number) => (
-                    <div key={index} className="bg-neutral-900/50 border border-neutral-800 p-6 rounded-lg relative group hover:border-lime-500/50 transition-colors hover:-translate-y-1">
-                      <div className="absolute top-0 left-0 w-1 h-full bg-neutral-800 group-hover:bg-lime-500 transition-colors"></div>
-                      <h3 className="font-sport font-bold italic text-xl text-white uppercase mb-2 ml-2">{phase.name}</h3>
-                      <p className="text-neutral-400 ml-2">{phase.desc}</p>
+                    <div key={index} className={`relative group border ${isDark ? 'bg-neutral-900/50 border-neutral-800' : 'bg-neutral-50 border-neutral-200'} p-6 rounded-lg transition-colors hover:border-lime-500/50 hover:-translate-y-1`}>
+                      <div className={`absolute top-0 left-0 w-1 h-full ${isDark ? 'bg-neutral-800' : 'bg-neutral-200'} group-hover:bg-lime-500 transition-colors`}></div>
+                      <h3 className={`font-sport font-bold italic text-xl ${isDark ? 'text-white' : 'text-neutral-900'} uppercase mb-2 ml-2`}>{phase.name}</h3>
+                      <p className={`${isDark ? 'text-neutral-400' : 'text-neutral-600'} ml-2`}>{phase.desc}</p>
                     </div>
                   ))}
                 </div>
@@ -178,14 +181,14 @@ export const ProgramDetails: React.FC<ProgramDetailsProps> = ({ programId, onBac
 
             <Reveal delay={0.5}>
               <div>
-                <h2 className="font-sport font-bold italic text-3xl text-white uppercase mb-6">What's Included</h2>
+                <h2 className={`font-sport font-bold italic text-3xl ${isDark ? 'text-white' : 'text-neutral-900'} uppercase mb-6`}>What's Included</h2>
                 <ul className="grid md:grid-cols-2 gap-4">
                   {program.features.map((feature: string, index: number) => (
-                    <li key={index} className="flex items-center gap-3 text-neutral-300 group">
-                      <div className="p-1 rounded-full bg-neutral-800 group-hover:bg-lime-500 group-hover:text-black transition-colors">
+                    <li key={index} className={`flex items-center gap-3 ${isDark ? 'text-neutral-300' : 'text-neutral-700'} group`}>
+                      <div className={`p-1 rounded-full ${isDark ? 'bg-neutral-800' : 'bg-neutral-100'} group-hover:bg-lime-500 group-hover:text-black transition-colors`}>
                         <Check className="w-4 h-4" />
                       </div>
-                      <span className="group-hover:text-white transition-colors">{feature}</span>
+                      <span className={`group-hover:text-lime-600 transition-colors`}>{feature}</span>
                     </li>
                   ))}
                 </ul>
@@ -196,20 +199,20 @@ export const ProgramDetails: React.FC<ProgramDetailsProps> = ({ programId, onBac
           {/* Sidebar Stats */}
           <div className="lg:col-span-1">
             <Reveal delay={0.6} direction="left">
-              <div className="bg-neutral-900 border border-neutral-800 p-8 sticky top-24 rounded-xl hover:border-lime-500/30 transition-colors shadow-2xl">
-                <h3 className="font-sport font-black italic text-2xl text-white uppercase mb-6 border-b border-white/10 pb-4">
+              <div className={`${isDark ? 'bg-neutral-900 border-neutral-800 shadow-2xl' : 'bg-white border-neutral-200 shadow-lg'} border p-8 sticky top-24 rounded-xl hover:border-lime-500/30 transition-colors text-left`}>
+                <h3 className={`font-sport font-black italic text-2xl ${isDark ? 'text-white' : 'text-neutral-900'} uppercase mb-6 border-b ${isDark ? 'border-white/10' : 'border-black/5'} pb-4`}>
                   Protocol Stats
                 </h3>
 
                 <div className="space-y-6 mb-8">
                   {program.stats.map((stat: any, index: number) => (
                     <div key={index} className="flex items-center gap-4 group">
-                      <div className="p-3 bg-neutral-800 rounded text-lime-500 group-hover:bg-lime-500 group-hover:text-black transition-colors shadow-glow">
+                      <div className={`p-3 ${isDark ? 'bg-neutral-800' : 'bg-neutral-50'} rounded text-lime-500 group-hover:bg-lime-500 group-hover:text-black transition-colors shadow-glow`}>
                         <stat.icon size={24} />
                       </div>
                       <div>
-                        <p className="text-xs text-neutral-500 font-bold uppercase tracking-wider group-hover:text-lime-500 transition-colors">{stat.label}</p>
-                        <p className="text-white font-bold text-lg">{stat.value}</p>
+                        <p className={`text-xs ${isDark ? 'text-neutral-500' : 'text-neutral-600'} font-bold uppercase tracking-wider group-hover:text-lime-500 transition-colors`}>{stat.label}</p>
+                        <p className={`${isDark ? 'text-white' : 'text-neutral-900'} font-bold text-lg`}>{stat.value}</p>
                       </div>
                     </div>
                   ))}
